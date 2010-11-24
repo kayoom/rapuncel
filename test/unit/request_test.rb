@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'ruby-debug'
 
 class RequestTest < ActiveSupport::TestCase
   def get_test_request

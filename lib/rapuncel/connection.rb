@@ -31,6 +31,12 @@ module Rapuncel
       end
     end
     
+    def url
+      "http://#{host}:#{port}#{path}"
+    end
+    
+    def http_auth? ; false ; end
+    def api_auth? ; false ; end
   end
   
   class AuthConnection < Connection
@@ -43,6 +49,8 @@ module Rapuncel
       @user         = user                      || ''
       @password     = configuration[:password]  || ''
     end
+    
+    def http_auth? ; true ; end
   end
   
   class ApiKeyAuthConnection < Connection
@@ -58,5 +66,7 @@ module Rapuncel
     def headers
       super.merge api_key_header => api_key
     end
+    
+    def api_auth? ; true ; end
   end
 end

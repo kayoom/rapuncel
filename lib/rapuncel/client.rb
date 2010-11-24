@@ -1,6 +1,7 @@
 require 'rapuncel/adapters/typhoeus_adapter'
 require 'rapuncel/connection'
 
+
 module Rapuncel
   class Client
     attr_accessor :connection
@@ -16,13 +17,16 @@ module Rapuncel
       Connection.new configuration
     end
     
+    def call name, *args
+      execute Request.new(name, *args)
+    end
     
     def execute_to_ruby request
       execute(request).to_ruby
     end
     
     def execute request
-      
+      Response.new send_body(request.to_xml_rpc)
     end
   end
 end

@@ -4,7 +4,7 @@ require 'active_support/core_ext/hash/keys'
 
 require 'rapuncel/base'
 require 'rapuncel/request'
-#require 'rapuncel/response'
+require 'rapuncel/response'
 require 'rapuncel/client'
 require 'rapuncel/proxy'
 

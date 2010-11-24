@@ -7,6 +7,7 @@ require 'test/unit'
 require 'mocha'
 require 'rapuncel'
 require 'nokogiri'
+require 'ruby-debug'
 
 class ActiveSupport::TestCase
   def assert_select xml, xpath, eq, count = nil
