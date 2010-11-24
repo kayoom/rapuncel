@@ -3,7 +3,7 @@ require 'builder'
 
 require 'rapuncel/base'
 require 'rapuncel/request'
-require 'rapuncel/response'
+#require 'rapuncel/response'
 require 'rapuncel/client'
 require 'rapuncel/proxy'
 
@@ -15,3 +15,4 @@ require 'rapuncel/core_ext/big_decimal'
 require 'rapuncel/core_ext/float'
 require 'rapuncel/core_ext/hash'
 require 'rapuncel/core_ext/array'
+require 'rapuncel/core_ext/boolean'
