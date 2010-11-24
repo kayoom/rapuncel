@@ -16,4 +16,14 @@ class RequestTest < ActiveSupport::TestCase
     
     assert_select xml, '/methodCall/methodName', 'test_method'
   end
+  
+  test "Serialized request should contain params" do
+    xml = get_test_request.to_xml_rpc
+    
+    assert_select xml, '/methodCall/params', 1
+    assert_select xml, '/methodCall/params/param/value', 2
+    
+    assert_select xml, '/methodCall/params/param/value', 'one argument', 1
+    assert_select xml, '/methodCall/params/param/value', 'another', 1
+  end
 end
