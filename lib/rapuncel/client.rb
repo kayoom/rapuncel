@@ -21,6 +21,10 @@ module Rapuncel
       execute Request.new(name, *args)
     end
     
+    def call_to_ruby name, *args
+      call(name, *args).to_ruby
+    end
+    
     def execute_to_ruby request
       execute(request).to_ruby
     end

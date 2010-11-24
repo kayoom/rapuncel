@@ -8,6 +8,14 @@ class Object
     
   end
   
+  def self.from_xml_rpc xml_node
+    case xml_node.name
+    when 'i4', 'int'
+      Integer.from_xml_rpc xml_node
+    when ...
+      ...
+  end
+  
   protected
   def to_xml_rpc_name
     warn "No specific to_xml_rpc_name method written for this object. The result may not be what you expect."
