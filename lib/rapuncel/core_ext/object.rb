@@ -29,7 +29,7 @@ class Object
 
   protected
   def to_xml_rpc_name
-    warn "No specific to_xml_rpc_name method written for this object. The result may not be what you expect."
+    warn "No specific to_xml_rpc_name method written for this object (#{self.class.to_s}). The result may not be what you expect."
     self.class.to_s.downcase
   end
 end

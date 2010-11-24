@@ -37,10 +37,11 @@ class Hash
       
       raw_key_name = member.children.first
       warn "Expected 'name' tag, but got #{raw_key_name.name}" unless ['name'].include? raw_key_name.name
-      key = raw_key_name.text.to_s #make the hash key into a symbol
+      key = raw_key_name.text.to_sym #make the hash key into a symbol
       
       raw_value = member.children.last
       warn "Expected 'value' tag, but got #{raw_value.name}" unless ['value'].include? raw_value
+      debugger
       value = Object.from_xml_rpc raw_value.children.first
       
       [key, value]
