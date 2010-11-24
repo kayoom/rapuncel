@@ -14,9 +14,9 @@ require 'rapuncel/core_ext/array'
 require 'rapuncel/request'
 
 module Rapuncel
-  BuilderOptions = {}
+  BUILDER_OPTIONS = {}
   
   def self.get_builder options = {}
-    Builder::XmlMarkup.new BuilderOptions.merge(options)
+    Builder::XmlMarkup.new BUILDER_OPTIONS.merge(options)
   end
 end

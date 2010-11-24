@@ -22,8 +22,10 @@ module Rapuncel
     
     protected
     def method_call! builder
-      method_name! builder
-      params! builder
+      builder.methodCall do
+        method_name! builder
+        params! builder
+      end
     end
     
     def method_name! builder
