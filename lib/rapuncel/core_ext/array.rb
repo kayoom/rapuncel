@@ -8,7 +8,9 @@ class Array
     b.array do |b|
       b.data do |b|
         self.each do |array_entry|
-          b.value array_entry.to_xml_rpc
+          b.value do |b|
+            array_entry.to_xml_rpc b
+          end
         end
       end
     end
