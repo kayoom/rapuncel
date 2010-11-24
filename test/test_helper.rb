@@ -12,7 +12,7 @@ class ActiveSupport::TestCase
     doc = Nokogiri::XML.parse(xml)
     res = doc.xpath(xpath)
     
-    eq.nil? && res.blank? && assert(true) && return
+    eq.nil? && assert(res.blank?) && return
     
     case eq
     when Integer
