@@ -8,7 +8,7 @@ class BooleanTest < ActiveSupport::TestCase
   end
   
   test "false must evaluate to 0" do
-    assert_select false.to_xml_rpc, '/boolean',1
+    assert_select false.to_xml_rpc, '/boolean', 1
     assert_select false.to_xml_rpc, '/boolean', '0'
   end
   
