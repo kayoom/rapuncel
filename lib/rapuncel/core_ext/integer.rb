@@ -12,7 +12,7 @@ class Integer
   end
 
   def self.from_xml_rpc xml_node
-    warn "xml node given (name of #{xml_node.name}) is not of integer type, node name should be 'i4' or 'int'" unless ['i4','int'].include? xml_node.name
+    warn "xml node given (name of #{xml_node.name}) is not of integer type, node name should be 'i4' or 'int'" unless ['i4','int'].include? xml_node.name.downcase
 
     xml_node.text.to_i #calling to_i on the text between the i4 or int tags
   end
