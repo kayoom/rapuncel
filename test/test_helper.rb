@@ -4,6 +4,7 @@ $:.unshift lib_dir
 require 'rubygems'
 require 'active_support'
 require 'test/unit'
+require 'mocha'
 require 'rapuncel'
 require 'nokogiri'
 
