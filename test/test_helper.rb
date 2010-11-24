@@ -13,15 +13,15 @@ class ActiveSupport::TestCase
   def assert_select xml, xpath, eq, count = nil
     doc = Nokogiri::XML.parse xml, nil, nil, Nokogiri::XML::ParseOptions::STRICT
     res = doc.xpath xpath
-    
+
     eq.nil? && assert(res.blank?) && return
-    
+
     case eq
     when Integer
       assert_equal eq, res.size
     when String
       eq = eq.strip
-      
+
       if count
         assert_equal count, res.to_a.select{ |node|
           node.text.strip == eq
@@ -30,7 +30,7 @@ class ActiveSupport::TestCase
         assert res.to_a.all?{ |node|
           node.text.strip == eq
         }
-      end        
+      end
     else
       raise "Third argument should be String or Integer"
     end

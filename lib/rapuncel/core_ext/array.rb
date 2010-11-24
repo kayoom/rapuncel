@@ -2,9 +2,9 @@ require 'builder'
 
 
 class Array
-    
+
   def to_xml_rpc b = Rapuncel.get_builder
-    
+
     b.array do
       b.data do
         each do |array_entry|
@@ -13,6 +13,6 @@ class Array
           end
         end
       end
-    end    
-  end  
+    end
+  end
 end
