@@ -1,5 +1,6 @@
 require 'builder'
 
+require 'active_support/core_ext/hash/keys'
 
 require 'rapuncel/base'
 require 'rapuncel/request'
