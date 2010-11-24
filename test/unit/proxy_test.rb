@@ -49,6 +49,4 @@ class ProxyTest < ActiveSupport::TestCase
     v = Rapuncel::Proxy.new t
     assert v.respond_to?('foobar')
   end
-  
-  
 end

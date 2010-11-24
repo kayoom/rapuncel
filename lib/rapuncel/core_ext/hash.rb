@@ -3,7 +3,7 @@ require 'builder'
 class Hash
   #Hash will be translated into an XML-RPC "struct" object
   
-  def to_xml_rpc b=Rapuncel.get_builder
+  def to_xml_rpc b = Rapuncel.get_builder
     
     b.struct do |b|
       self.each_pair do |key, value|
@@ -19,13 +19,5 @@ class Hash
         end
       end
     end
-    
-    
-    
-    
   end
-  
-  
-  
-  
 end

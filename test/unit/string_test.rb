@@ -9,6 +9,4 @@ class StringTest < ActiveSupport::TestCase
     assert_select xml, '/string', 1
     assert_select xml, '/string', str
   end
-  
-  
 end
