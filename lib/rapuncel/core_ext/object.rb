@@ -9,6 +9,7 @@ class Object
     
   end
   
+  protected
   def to_xml_rpc_name
     self.class.to_s.downcase
   end
