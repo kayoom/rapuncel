@@ -1,10 +1,5 @@
 require 'builder'
 
-class String
-  def to_xml_rpc builder = nil
-    builder.string self
-  end
-end
 
 module Rapuncel
   class Request
