@@ -22,6 +22,8 @@ module Rapuncel
     
     protected
     def method_call! builder
+      builder.instruct!
+      
       builder.methodCall do
         method_name! builder
         params! builder

@@ -9,8 +9,8 @@ require 'nokogiri'
 
 class ActiveSupport::TestCase
   def assert_select xml, xpath, eq, count = nil
-    doc = Nokogiri::XML.parse(xml)
-    res = doc.xpath(xpath)
+    doc = Nokogiri::XML.parse xml, nil, nil, Nokogiri::XML::ParseOptions::STRICT
+    res = doc.xpath xpath
     
     eq.nil? && assert(res.blank?) && return
     
