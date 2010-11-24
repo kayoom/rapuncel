@@ -12,8 +12,21 @@ class Object
     case xml_node.name
     when 'i4', 'int'
       Integer.from_xml_rpc xml_node
-    when ...
-      ...
+    when 'array'
+      Array.from_xml_rpc xml_node
+    when 'struct'
+      Hash.from_xml_rpc xml_node
+    when 'double'
+      Float.from_xml_rpc xml_node
+    when 'boolean'
+      Boolean.from_xml_rpc xml_node
+    when 'string'
+      String.from_xml_rpc xml_node
+    when 'dateTime.iso8601'
+      Time.from_xml_rpc xml_node
+    else
+      
+    end
   end
   
   protected

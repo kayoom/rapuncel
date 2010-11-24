@@ -17,3 +17,8 @@ class FalseClass
     b.boolean "0"
   end
 end
+
+
+class Boolean #this is to catch the from_xml_rpc call from Object
+  
+end
