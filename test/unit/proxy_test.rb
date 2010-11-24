@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ProxyTest < ActiveSupport::TestCase
-  class TestConnection
+  class TestClient
     def execute_to_ruby request
       request
     end
@@ -18,8 +18,8 @@ class ProxyTest < ActiveSupport::TestCase
     p.__freeze__
   end
   
-  test "Proxy should delegate standard Object instance methods to Connection" do
-    t = TestConnection.new
+  test "Proxy should delegate standard Object instance methods to Client" do
+    t = TestClient.new
     
     p = Rapuncel::Proxy.new t
     request = p.inspect
@@ -27,8 +27,8 @@ class ProxyTest < ActiveSupport::TestCase
     assert_equal 'inspect', request.method_name
   end
   
-  test "Proxy should delegate non-existing methods to Connection" do
-    t = TestConnection.new
+  test "Proxy should delegate non-existing methods to Client" do
+    t = TestClient.new
     
     p = Rapuncel::Proxy.new t
     request = p.whatever 'arg1', 'foobar', 1234
@@ -38,7 +38,7 @@ class ProxyTest < ActiveSupport::TestCase
   end
   
   test "Proxy should dynamically define methods as soon as needed" do
-    t = TestConnection.new
+    t = TestClient.new
     
     p = Rapuncel::Proxy.new t
     

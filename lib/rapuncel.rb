@@ -3,6 +3,8 @@ require 'builder'
 
 require 'rapuncel/base'
 require 'rapuncel/request'
+require 'rapuncel/response'
+require 'rapuncel/client'
 require 'rapuncel/proxy'
 
 # Ruby Core extensions:

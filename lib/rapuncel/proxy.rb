@@ -7,9 +7,9 @@ module Rapuncel
     LOCKED_PATTERN = /(\A__|\?\Z|!\Z)/
     
     class << self
-      def new connection
+      def new client
         allocate.__tap__ do |new_proxy|
-          new_proxy.__initialize__ connection
+          new_proxy.__initialize__ client
         end
       end
     
@@ -31,11 +31,11 @@ module Rapuncel
     end
     
     def call! name, *args
-      @connection.execute_to_ruby Request.new(name, *args)
+      @client.execute_to_ruby Request.new(name, *args)
     end
     
-    def __initialize__ connection
-      @connection = connection
+    def __initialize__ client
+      @client = client
     end
     
     protected
