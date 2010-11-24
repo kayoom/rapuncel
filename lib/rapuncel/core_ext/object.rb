@@ -12,8 +12,13 @@ class Object
     case xml_node.name
     when 'i4', 'int'
       Integer.from_xml_rpc xml_node
-    when ...
-      ...
+    when 'array'
+      Array.from_xml_rpc xml_node
+    when 'string'
+      String.from_xml_rpc xml_node
+    when 'struct'
+      Hash.from_xml_rpc xml_node
+    end
   end
   
   protected
