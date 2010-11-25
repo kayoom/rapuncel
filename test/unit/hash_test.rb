@@ -14,7 +14,7 @@ class TestHelper < ActiveSupport::TestCase
   
   
   test "A hash to xml and back should be itself" do
-    hash1 = {:a => :b, :c => :d, :A => :B}
+    hash1 = {:a => "b", :c => "d", :A => "B"}
     arr1 = (1..10).to_a
     hash2 = {:arr => arr1, :text => "sheeee"}
     hash3 = hash1.merge({:jooooo => hash2})
