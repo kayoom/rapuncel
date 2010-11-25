@@ -33,4 +33,5 @@ class ResponseTest < ActiveSupport::TestCase
     assert_kind_of Array, r.to_ruby
     assert_equal "foo foo foo", r.to_ruby.first
   end
+  
 end

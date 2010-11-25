@@ -38,4 +38,59 @@ class ArrayTest < ActiveSupport::TestCase
     end
     
   end
+  
+  test "repsonse" do
+    response_body = <<-XML
+      <array><data>
+      <value><struct>
+      <member>
+      <name>state</name>
+      <value><string>uninstalled</string></value>
+      </member>
+      <member>
+      <name>name</name>
+      <value><string>account_cancel</string></value>
+      </member>
+      <member>
+      <name>id</name>
+      <value><int>1</int></value>
+      </member>
+      </struct></value>
+      <value><struct>
+      <member>
+      <name>state</name>
+      <value><string>uninstalled</string></value>
+      </member>
+      <member>
+      <name>name</name>
+      <value><string>document_ftp</string></value>
+      </member>
+      <member>
+      <name>id</name>
+      <value><int>3</int></value>
+      </member>
+      </struct></value>
+      <value><struct>
+      <member>
+      <name>state</name>
+      <value><string>uninstalled</string></value>
+      </member>
+      <member>
+      <name>name</name>
+      <value><string>mrp_repair</string></value>
+      </member>
+      <member>
+      <name>id</name>
+      <value><int>2</int></value>
+      </member>
+      </struct></value>
+      </data></array>
+    XML
+    
+    arr = Object.from_xml_rpc response_body
+    
+    debugger
+    assert_kind_of Array, arr
+  end
+
 end

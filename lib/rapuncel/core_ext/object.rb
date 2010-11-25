@@ -11,6 +11,8 @@ class Object
       xml_node = Nokogiri::XML.parse(xml_node).root
     end
     
+    return nil if xml_node.nil?
+    
     case xml_node.name
     when 'i4', 'int'
       Integer.from_xml_rpc xml_node
