@@ -28,7 +28,7 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="-Users-mariantheisen-Projects-Kayoom-rapuncel-lib-rapuncel-core_ext-hash_rb.html">/Users/mariantheisen/Projects/Kayoom/rapuncel/lib/rapuncel/core_ext/hash.rb</a></td>
-            <td class='right_align'><tt>72</tt></td>
+            <td class='right_align'><tt>39</tt></td>
             <td class='right_align'><tt>27</tt></td>
             <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
           <div class="percent_graph">
@@ -194,302 +194,104 @@
         
           
           
-          <tr class="inferred">
-            <td><pre><a name="line24">24</a>   # def self.from_xml_rpc xml_node</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line25">25</a>   #   </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line26">26</a>   #   warn &quot;The given xml_node is a #{xml_node.name}, not a 'struct'. Continuing at your risk&quot; unless ['struct'].include? xml_node.name</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line27">27</a>   #   </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line28">28</a>   #   #the children of xml_node are the entries of the struct</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line29">29</a>   #   entries = xml_node.children</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line30">30</a>   #   </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line31">31</a>   #   keys_and_values = entries.map do |e|</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line32">32</a>   #     </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line33">33</a>   #     #the entries are encapsulated in 'member' tags</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line34">34</a>   #     warn &quot;Expected a 'member' tag, but got #{e.name}&quot; unless ['member'].include? e.name</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line35">35</a>   #     </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line36">36</a>   #     member = e.children.first</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line37">37</a>   #     </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line38">38</a>   #     raw_key_name = member.children.first</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line39">39</a>   #     warn &quot;Expected 'name' tag, but got #{raw_key_name.name}&quot; unless ['name'].include? raw_key_name.name</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line40">40</a>   #     key = raw_key_name.text.to_sym #make the hash key into a symbol</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line41">41</a>   #     </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line42">42</a>   #     raw_value = member.children.last</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line43">43</a>   #     warn &quot;Expected 'value' tag, but got #{raw_value.name}&quot; unless ['value'].include? raw_value</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line44">44</a>   #     debugger</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line45">45</a>   #     value = Object.from_xml_rpc raw_value.children.first</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line46">46</a>   #     </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line47">47</a>   #     [key, value]</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line48">48</a>   #   end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line49">49</a>   #   </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line50">50</a>   #   Hash[*keys_and_values]</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line51">51</a>   #   </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line52">52</a>   #   </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line53">53</a>   #   </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line54">54</a>   # end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line55">55</a>   </pre></td>
+          <tr class="marked">
+            <td><pre><a name="line24">24</a>   def self.from_xml_rpc xml_node</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line56">56</a>   def self.from_xml_rpc xml_node</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line57">57</a>     warn &quot;The given xml_node is a #{xml_node.name}, not a 'struct'. Continuing at your risk&quot; unless ['struct'].include? xml_node.name</pre></td>
+            <td><pre><a name="line25">25</a>     warn &quot;The given xml_node is a #{xml_node.name}, not a 'struct'. Continuing at your risk&quot; unless ['struct'].include? xml_node.name</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line58">58</a>     </pre></td>
+            <td><pre><a name="line26">26</a>     </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line59">59</a>     keys_and_values = xml_node.xpath('./member')</pre></td>
+            <td><pre><a name="line27">27</a>     keys_and_values = xml_node.xpath('./member')</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line60">60</a>     </pre></td>
+            <td><pre><a name="line28">28</a>     </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line61">61</a>     hash = new</pre></td>
+            <td><pre><a name="line29">29</a>     hash = new</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line62">62</a>     keys_and_values.each do |kv|</pre></td>
+            <td><pre><a name="line30">30</a>     keys_and_values.each do |kv|</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line63">63</a>       key = kv.xpath('./name').first.text.to_sym</pre></td>
+            <td><pre><a name="line31">31</a>       key = kv.xpath('./name').first.text.to_sym</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line64">64</a>       # debugger</pre></td>
+            <td><pre><a name="line32">32</a>       </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line65">65</a>       value = Object.from_xml_rpc kv.xpath('./value').first.children.first</pre></td>
+            <td><pre><a name="line33">33</a>       value = Object.from_xml_rpc kv.xpath('./value').first.children.first</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line66">66</a>       hash[key]=value</pre></td>
+            <td><pre><a name="line34">34</a>       hash[key]=value</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line67">67</a>       </pre></td>
+            <td><pre><a name="line35">35</a>       </pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line68">68</a>     end</pre></td>
+            <td><pre><a name="line36">36</a>     end</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line69">69</a>     hash</pre></td>
+            <td><pre><a name="line37">37</a>     hash</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line70">70</a>   end</pre></td>
+            <td><pre><a name="line38">38</a>   end  </pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line71">71</a>   </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line72">72</a> end</pre></td>
+            <td><pre><a name="line39">39</a> end</pre></td>
           </tr>
         
       </tbody>
     </table>
 
-    <p>Generated on Thu Nov 25 11:47:39 +0100 2010 with <a href="http://github.com/relevance/rcov">rcov 0.9.8</a></p>
+    <p>Generated on Thu Nov 25 12:29:31 +0100 2010 with <a href="http://github.com/relevance/rcov">rcov 0.9.8</a></p>
 
   </body>
 </html>
