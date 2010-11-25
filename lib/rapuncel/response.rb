@@ -1,4 +1,5 @@
 require 'active_support/core_ext/module/delegation'
+require 'rapuncel/fault'
 
 module Rapuncel
   class Response
@@ -15,12 +16,13 @@ module Rapuncel
 
         if @xml_doc.xpath('/methodResponse/fault').blank?
           @status = 'success'
+          parse_response
         else
           @status = 'fault'
-          #TODO handle faults
+          parse_fault
         end
       else
-        #TODO handle 404, 403 etc
+        @to_ruby = nil
         @status = 'error'
       end
     end
@@ -30,7 +32,17 @@ module Rapuncel
     end
 
     def to_ruby
-      body
+      @to_ruby
+    end
+    
+    def parse_fault
+      fault = @xml_doc.xpath('/methodResponse/fault/value/struct')
+      
+      @to_ruby = Fault.from_xml_rpc fault.first
+    end
+    
+    def parse_response
+      
     end
   end
 end
