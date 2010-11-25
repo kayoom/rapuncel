@@ -21,7 +21,7 @@ class Object
     when 'double'
       Float.from_xml_rpc xml_node
     when 'boolean'
-      Boolean.from_xml_rpc xml_node
+      Rapuncel::Boolean.from_xml_rpc xml_node
     when 'string'
       String.from_xml_rpc xml_node
     when 'dateTime.iso8601'

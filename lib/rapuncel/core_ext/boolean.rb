@@ -17,7 +17,7 @@ class FalseClass
 end
 
 
-class Boolean #this is to catch the from_xml_rpc call from Object
+class Rapuncel::Boolean #this is to catch the from_xml_rpc call from Object
   def self.from_xml_rpc xml_node
     warn "This node is not boolean (it is #{xml_node.name}), but will be treated as one at your request. keep in mind that 1 means true and all the rest will be false" unless ['boolean'].include? xml_node.name.downcase
     
