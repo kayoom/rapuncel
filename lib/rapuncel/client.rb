@@ -11,6 +11,10 @@ module Rapuncel
     def proxy_for interface
       Proxy.new self, interface
     end
+    
+    def proxy
+      proxy_for nil
+    end
 
     def initialize configuration = {}
       @connection = init_connection(configuration)

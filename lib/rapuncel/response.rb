@@ -12,18 +12,10 @@ module Rapuncel
       @http_response = http_response
 
       if http_response.success?
-        @xml_doc = Nokogiri::XML.parse body
-
-        if @xml_doc.xpath('/methodResponse/fault').blank?
-          @status = 'success'
-          parse_response
-        else
-          @status = 'fault'
-          parse_fault
-        end
+        parse_response
       else
         @to_ruby = nil
-        @status = 'error'
+        @status = http_response.code
       end
     end
 
@@ -42,7 +34,23 @@ module Rapuncel
     end
     
     def parse_response
+      @xml_doc = Nokogiri::XML.parse body
+
+      if @xml_doc.xpath('/methodResponse/fault').blank?
+        @status = 'success'
+        parse_success
+      else
+        @status = 'fault'
+        parse_fault
+      end
+    end
+    
+    def parse_success
+      values = @xml_doc.xpath('/methodResponse/params/param/value/*')
       
+      @to_ruby = values.to_a.map do |node|
+        Object.from_xml_rpc node
+      end
     end
   end
 end

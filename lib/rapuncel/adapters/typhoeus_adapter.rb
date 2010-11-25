@@ -4,7 +4,6 @@ module Rapuncel
   module Adapters
     module TyphoeusAdapter
       def send_method_call str
-        puts str
         Typhoeus::Request.post connection.url, typhoeus_params.merge(:body => str)
       end
 
