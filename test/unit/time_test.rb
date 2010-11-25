@@ -17,12 +17,7 @@ class TimeTest < ActiveSupport::TestCase
     xml_node=Nokogiri::XML(xml).children.first
     
     reparsed=Time.from_xml_rpc(xml_node)
-    
-    puts "Original: #{t}"
-    puts "Reparsed: #{reparsed}"
-    
+        
     assert_equal t.to_i, reparsed.to_i # can't  use assert_equal here! need to find a decent equality operator!!
-    #assert
   end
-
 end

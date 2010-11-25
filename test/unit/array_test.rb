@@ -16,9 +16,6 @@ class ArrayTest < ActiveSupport::TestCase
     
     reparsed = Array.from_xml_rpc xml_node
     
-    puts "arr.to_s = #{arr.to_s}"
-    puts "reparsed.to_s = #{reparsed.to_s}"
-    
     reparsed
   end
   
