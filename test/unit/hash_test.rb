@@ -5,8 +5,9 @@ class TestHelper < ActiveSupport::TestCase
   
   
   
-  def to_and_from_xml_rpc hash
+  def to_and_from_xml_rpc hash, verbose=false
     xml = hash.to_xml_rpc
+    puts xml if verbose
     xml_node = Nokogiri::XML(xml).children.first
     
     Hash.from_xml_rpc xml_node
@@ -19,10 +20,10 @@ class TestHelper < ActiveSupport::TestCase
     hash2 = {:arr => arr1, :text => "sheeee"}
     hash3 = hash1.merge({:jooooo => hash2})
     
-    hashes = [hash1, hash2, hash3]
+    hashes = [hash3]#[hash1, hash2, hash3]
     
     results = hashes.map do |h|
-      to_and_from_xml_rpc h
+      to_and_from_xml_rpc h, true
     end
     
     hashes.zip(results).each do |hr|

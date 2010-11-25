@@ -59,16 +59,13 @@ class Hash
     keys_and_values = xml_node.xpath('/struct/member')
     
     hash = new
-    
     keys_and_values.each do |kv|
-      debugger
-      key = kv.xpath('/member/name').text.to_sym
-      value = Object.from_xml_rpc kv.xpath('/member/value')
-      debugger
+      key = kv.xpath('.//name').first.text.to_sym
+      value = Object.from_xml_rpc kv.xpath('.//value').first.children.first
       hash[key]=value
       
     end
-
+    hash
   end
   
 end
