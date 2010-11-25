@@ -24,7 +24,7 @@ module Rapuncel
     end
 
     def to_ruby
-      @to_ruby
+      @to_ruby || raise("HTTP Error: #{@status}\n#{body}")
     end
     
     def parse_fault
