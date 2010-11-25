@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'active_support/core_ext/hash/keys'
 
 class TestHelper < ActiveSupport::TestCase
   
@@ -11,6 +12,20 @@ class TestHelper < ActiveSupport::TestCase
     xml_node = Nokogiri::XML(xml).children.first
     
     Hash.from_xml_rpc xml_node
+  end
+  
+  test 'Hash#to_xml_rpc' do
+    xml = {
+      :abc => 'one and two',
+      40 => %w(foo bar bee)
+    }.to_xml_rpc
+    
+    assert_select xml, '/struct', 1
+    assert_select xml, '/struct/member', 2
+    assert_select xml, '/struct/member/name', 'abc', 1
+    assert_select xml, '/struct/member/value/string', 'one and two', 1
+    assert_select xml, '/struct/member/name', '40', 1
+    assert_select xml, '/struct/member/value/array/data/value', 3
   end
   
   
@@ -28,16 +43,12 @@ class TestHelper < ActiveSupport::TestCase
       to_and_from_xml_rpc h
     end
     
-    result4 = to_and_from_xml_rpc hash4, true #separate, non symbol keys
+    result4 = to_and_from_xml_rpc hash4 #separate, non symbol keys
     
     hashes.zip(results).each do |hr|
       assert_equal *hr
-    end
+    end    
     
-    assert_equal hash4.symbolize_keys, result4
+    assert_equal hash4.stringify_keys.symbolize_keys, result4
   end
-    
-    
-  
-  
 end

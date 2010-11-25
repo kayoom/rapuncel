@@ -27,8 +27,6 @@ class Rapuncel::Boolean #this is to catch the from_xml_rpc call from Object
       true
     else
       false
-    end
-    
-  end
-  
+    end    
+  end  
 end
