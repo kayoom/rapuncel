@@ -7,6 +7,10 @@ class Object
   end
 
   def self.from_xml_rpc xml_node
+    if xml_node.is_a? String
+      xml_node = Nokogiri::XML.parse(xml_node).root
+    end
+    
     case xml_node.name
     when 'i4', 'int'
       Integer.from_xml_rpc xml_node

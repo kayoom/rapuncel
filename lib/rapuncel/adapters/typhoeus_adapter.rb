@@ -3,7 +3,7 @@ require 'typhoeus'
 module Rapuncel
   module Adapters
     module TyphoeusAdapter
-      def send_body str
+      def send_method_call str
         Typhoeus::Request.post connection.url, typhoeus_params.merge(:body => str)
       end
 

@@ -30,7 +30,7 @@ module Rapuncel
     end
 
     def execute request
-      Response.new send_body(request.to_xml_rpc)
+      Response.new send_method_call(request.to_xml_rpc)
     end
   end
 end
