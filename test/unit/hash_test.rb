@@ -20,15 +20,21 @@ class TestHelper < ActiveSupport::TestCase
     hash2 = {:arr => arr1, :text => "sheeee"}
     hash3 = hash1.merge({:jooooo => hash2})
     
-    hashes = [hash3]#[hash1, hash2, hash3]
+    hash4 = Hash[*(1..10).to_a] #separate, non symbol keys
+    
+    hashes = [hash1, hash2, hash3]
     
     results = hashes.map do |h|
-      to_and_from_xml_rpc h, true
+      to_and_from_xml_rpc h
     end
+    
+    result4 = to_and_from_xml_rpc hash4, true #separate, non symbol keys
     
     hashes.zip(results).each do |hr|
       assert_equal *hr
     end
+    
+    assert_equal hash4.symbolize_keys, result4
   end
     
     
