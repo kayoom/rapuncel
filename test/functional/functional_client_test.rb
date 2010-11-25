@@ -1,6 +1,6 @@
 require 'functional_test_helper'
 
-class ClientTest < FunctionalTest
+class FunctionalClientTest < FunctionalTest
   test "Simple XMLRPC call" do
     client = Rapuncel::Client.new :port => 8080
     proxy = client.proxy_for 'num'
