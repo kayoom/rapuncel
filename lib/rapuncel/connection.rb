@@ -14,7 +14,6 @@ module Rapuncel
     end
 
     attr_accessor :host, :port, :path, :ssl, :headers
-
     alias_method :ssl?, :ssl
 
     def initialize configuration = {}
@@ -33,6 +32,10 @@ module Rapuncel
 
     def url
       "http://#{host}:#{port}#{path}"
+    end
+    
+    def headers
+      @headers.merge  :Accept => 'text/xml', :'content-type' => 'text/xml'
     end
 
     def http_auth? ; false ; end

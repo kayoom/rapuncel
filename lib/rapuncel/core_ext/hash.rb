@@ -56,17 +56,13 @@ class Hash
   def self.from_xml_rpc xml_node
     warn "The given xml_node is a #{xml_node.name}, not a 'struct'. Continuing at your risk" unless ['struct'].include? xml_node.name
     
-    keys_and_values = xml_node.xpath('/struct/member')
-    puts "Hash.from_xml_rpc called"
-    debugger
+    keys_and_values = xml_node.xpath('./member')
+    
     hash = new
     keys_and_values.each do |kv|
-      key = kv.xpath('.//name').first.text.to_sym
-      puts "Set key to #{key.to_s}"
-      debugger
-      value = Object.from_xml_rpc kv.xpath('.//value').first.children.first
-      puts "Set value to #{value.to_s}"
-      debugger
+      key = kv.xpath('./name').first.text.to_sym
+      # debugger
+      value = Object.from_xml_rpc kv.xpath('./value').first.children.first
       hash[key]=value
       
     end

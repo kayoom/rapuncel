@@ -8,6 +8,9 @@ module Rapuncel
 
     include Adapters::TyphoeusAdapter
 
+    def proxy_for interface
+      Proxy.new self, interface
+    end
 
     def initialize configuration = {}
       @connection = init_connection(configuration)
