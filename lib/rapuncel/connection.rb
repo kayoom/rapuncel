@@ -17,7 +17,7 @@ module Rapuncel
     alias_method :ssl?, :ssl
 
     def initialize configuration = {}
-
+      
       @host     = configuration[:host]    || 'localhost'
       @port     = configuration[:port]    || '80'
       @path     = configuration[:path]    || '/'

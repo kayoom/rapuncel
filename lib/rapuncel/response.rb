@@ -14,8 +14,8 @@ module Rapuncel
       if http_response.success?
         parse_response
       else
-        @to_ruby = nil
         @status = http_response.code
+        raise("HTTP Error: #{@status}\n#{body}")
       end
     end
 
@@ -24,7 +24,7 @@ module Rapuncel
     end
 
     def to_ruby
-      @to_ruby || raise("HTTP Error: #{@status}\n#{body}")
+      @to_ruby
     end
     
     def parse_fault

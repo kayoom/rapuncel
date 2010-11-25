@@ -7,7 +7,9 @@ module Rapuncel
     LOCKED_PATTERN = /(\A__|\?\Z|!\Z)/
 
     class << self
-      def new client, interface = nil        
+      def new client_or_configuration, interface = nil        
+        client = Client.new client_or_configuration unless client_or_configuration.is_a?(Client)
+        
         allocate.__tap__ do |new_proxy|
           new_proxy.__initialize__ client, interface
         end

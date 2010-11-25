@@ -28,6 +28,8 @@ class Object
       String.from_xml_rpc xml_node
     when 'dateTime.iso8601'
       Time.from_xml_rpc xml_node
+    when 'base64'
+      raise 'Now its time to implement Base64'
     else
 
     end
