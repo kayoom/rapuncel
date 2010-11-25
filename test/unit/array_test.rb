@@ -39,7 +39,7 @@ class ArrayTest < ActiveSupport::TestCase
     
   end
   
-  test "repsonse" do
+  test "real world repsonse" do
     response_body = <<-XML
       <array><data>
       <value><struct>
@@ -89,8 +89,8 @@ class ArrayTest < ActiveSupport::TestCase
     
     arr = Object.from_xml_rpc response_body
     
-    debugger
     assert_kind_of Array, arr
+    assert_equal 3, arr.size
   end
 
 end
