@@ -14,7 +14,7 @@ class ResponseTest < ActiveSupport::TestCase
     end
   end
 
-  test 'Response should be an Array' do
+  test 'Response should be not an Array' do
     mock = MockReponse.new <<-XML
       <?xml version='1.0'?>
       <methodResponse>
@@ -30,8 +30,7 @@ class ResponseTest < ActiveSupport::TestCase
 
     r = Rapuncel::Response.new mock
 
-    assert_kind_of Array, r.to_ruby
-    assert_equal "foo foo foo", r.to_ruby.first
+    assert_equal "foo foo foo", r.to_ruby
   end
   
 end

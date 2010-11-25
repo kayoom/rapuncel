@@ -48,9 +48,7 @@ module Rapuncel
     def parse_success
       values = @xml_doc.xpath('/methodResponse/params/param/value/*')
       
-      @to_ruby = values.to_a.map do |node|
-        Object.from_xml_rpc node
-      end
+      @to_ruby = Object.from_xml_rpc values.to_a.first
     end
   end
 end

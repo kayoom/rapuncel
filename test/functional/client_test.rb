@@ -7,8 +7,7 @@ class FunctionalClientTest < FunctionalTest
     
     result = proxy.add 40, 2
     
-    assert_kind_of Array, result
-    assert_equal 42, result.first
+    assert_equal 42, result
   end
   
   test "Fault rpc call" do
