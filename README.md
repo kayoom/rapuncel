@@ -111,13 +111,17 @@ You can use most methods via
 However methods starting with \_\_, or ending with a bang \! or a question mark ? are not supported. To call those methods you can always
 use
 
-    proxy.call! methodname, *args
+    proxy.call! 'methodname', *args
     
 or via
 
-    client.call_to_ruby methodname, *args
+    client.call_to_ruby 'methodname', *args
     
-note client.call methodname, \*args will return a Rapuncel::Response object, use _call\_to\_ruby_ to get standard ruby objects
+note 
+
+    client.call 'methodname', \*args 
+    
+will return a Rapuncel::Response object, use _call\_to\_ruby_ to get standard ruby objects
 
 ## What's missing (for now)?
 
