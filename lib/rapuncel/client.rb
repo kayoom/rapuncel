@@ -1,4 +1,5 @@
 require 'rapuncel/adapters/typhoeus_adapter'
+require 'rapuncel/adapters/net_http_adapter'
 require 'rapuncel/connection'
 
 
@@ -6,7 +7,7 @@ module Rapuncel
   class Client
     attr_accessor :connection
 
-    include Adapters::TyphoeusAdapter
+    include Adapters::NetHttpAdapter
 
     def proxy_for interface
       Proxy.new self, interface
@@ -37,7 +38,9 @@ module Rapuncel
     end
 
     def execute request
-      Response.new send_method_call(request.to_xml_rpc)
+      xml = request.to_xml_rpc
+      
+      Response.new send_method_call(xml)
     end
   end
 end

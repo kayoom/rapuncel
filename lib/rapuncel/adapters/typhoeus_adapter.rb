@@ -1,8 +1,12 @@
 require 'typhoeus'
+require 'active_support/memoizable'
 
 module Rapuncel
   module Adapters
     module TyphoeusAdapter
+      extend ActiveSupport::Memoizable
+      
+      
       def send_method_call str
         Typhoeus::Request.post connection.url, typhoeus_params.merge(:body => str)
       end
@@ -13,6 +17,7 @@ module Rapuncel
           :headers => connection.headers
         }.merge auth_params
       end
+      memoize :typhoeus_params
 
       def auth_params
         return {} unless connection.http_auth?
