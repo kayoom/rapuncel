@@ -18,13 +18,13 @@ class Array
   
   
   def self.from_xml_rpc xml_node
-    warn "Warning: This is not an array-node (It is a(n) #{xml_node.name}.). Parsing may go wrong. Continuing at your risk" unless ['array'].include? xml_node.name.downcase
+    #warn "Warning: This is not an array-node (It is a(n) #{xml_node.name}.). Parsing may go wrong. Continuing at your risk" unless ['array'].include? xml_node.name.downcase
     
     
-    values = xml_node.xpath('./data/value/*')
+    values = xml_node.first_element_child.element_children #xpath('./data/value/*')
     
     values.map do |value|
-      Object.from_xml_rpc value
+      Object.from_xml_rpc value.first_element_child
     end    
   end
 end
