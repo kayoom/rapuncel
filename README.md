@@ -84,11 +84,24 @@ Rapuncel supports natively following object-types (and all their subclasses):
 * Hash
 * TrueClass, FalseClass
 * Float
-* Time
+* Time, Time-like objects
 
 * Symbols are converted to Strings
 
 * All other objects are transformed into a Hash ('struct' in XMLRPC-speak) containing their instance variables as key-value-pairs.
+
+### Can i customize this behavior for my objects?
+Yes you can, and it's dead simple, just override _to\_xml\_rpc_ with following signature (this is taken from Symbol#to\_xml\_rpc):
+
+    def to_xml_rpc(builder = Rapuncel.get_builder)
+      self.to_s.to_xml_rpc(builder)
+    end
+
+Of course you don't have to delegate to #to\_s, you just can use the Builder object directly
+
+    def to_xml_rpc(builder = Rapuncel.get_builder)
+      builder.string(self.to_s)
+    end
 
 ## Supported methods
 You can use most methods via
@@ -106,7 +119,7 @@ or via
     
 note client.call methodname, \*args will return a Rapuncel::Response object, use _call\_to\_ruby_ to get standard ruby objects
 
-## Whats missing (for now)?
+## What's missing (for now)?
 
 * Base64 support (or rather a consistent concept for Base64)
 * XMLRPC Extensions (pluggable support)
