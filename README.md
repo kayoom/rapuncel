@@ -119,7 +119,7 @@ or via
     
 note 
 
-    client.call 'methodname', \*args 
+    client.call 'methodname', *args 
     
 will return a Rapuncel::Response object, use _call\_to\_ruby_ to get standard ruby objects
 
