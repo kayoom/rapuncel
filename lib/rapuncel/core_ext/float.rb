@@ -9,7 +9,11 @@ class Float
     
     
   end
-
+  
+  def to_xml_rpc b = Rapuncel.get_builder
+    b.double to_s
+  end
+  
   protected
   def to_xml_rpc_name #we can just change this function. see why in object.rb
     "double"

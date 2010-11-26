@@ -6,9 +6,9 @@ class TestHelper < ActiveSupport::TestCase
   
   
   
-  def to_and_from_xml_rpc hash, verbose=false
+  def to_and_from_xml_rpc hash
     xml = hash.to_xml_rpc
-    puts xml if verbose
+
     xml_node = Nokogiri::XML(xml).children.first
     
     Hash.from_xml_rpc xml_node

@@ -1,6 +1,22 @@
 require 'test_helper'
 
 class ObjectTest < ActiveSupport::TestCase
+  class TestObject
+    attr_accessor :a, :b, :c
+  end
+  
+  test 'Object#to_xml_rpc should collect instance_variables in a Hash and return Hash#to_xml_rpc' do
+    obj = TestObject.new
+    obj.a = "one"
+    obj.b = "two"
+    
+    assert_equal({'a' => 'one', 'b' => 'two'}, obj.send(:_collect_ivars_in_hash))
+    obj.a.expects :to_xml_rpc
+    obj.b.expects :to_xml_rpc
+    
+    obj.to_xml_rpc
+  end
+  
   test "Object.from_xml_rpc should accept nodes as strings" do
     xml = "<int>42</int>"
     

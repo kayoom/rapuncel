@@ -19,7 +19,7 @@ module Rapuncel
     def initialize configuration = {}
       
       @host     = configuration[:host]    || 'localhost'
-      @port     = configuration[:port]    || '80'
+      @port     = configuration[:port]    || '8080'
       @path     = configuration[:path]    || '/'
       @headers  = configuration[:headers] || {}
 
