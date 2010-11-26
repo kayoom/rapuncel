@@ -8,10 +8,10 @@ module Rapuncel
 
     class << self
       def new client_or_configuration, interface = nil        
-        client = Client.new client_or_configuration unless client_or_configuration.is_a?(Client)
+        client_or_configuration = Client.new client_or_configuration if client_or_configuration.is_a?(Hash)
         
         allocate.__tap__ do |new_proxy|
-          new_proxy.__initialize__ client, interface
+          new_proxy.__initialize__ client_or_configuration, interface
         end
       end
 
