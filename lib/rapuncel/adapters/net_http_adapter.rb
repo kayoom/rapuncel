@@ -18,6 +18,10 @@ module Rapuncel
         def body
           @response.body
         end
+        
+        def code
+          @response.code
+        end
       end
       
       def send_method_call str

@@ -11,6 +11,7 @@ class ObjectTest < ActiveSupport::TestCase
     obj.b = "two"
     
     assert_equal({'a' => 'one', 'b' => 'two'}, obj.send(:_collect_ivars_in_hash))
+    
     obj.a.expects :to_xml_rpc
     obj.b.expects :to_xml_rpc
     

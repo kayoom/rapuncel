@@ -13,6 +13,7 @@ require 'rapuncel/proxy'
 # Ruby Core extensions:
 require 'rapuncel/core_ext/object'
 require 'rapuncel/core_ext/string'
+require 'rapuncel/core_ext/symbol'
 require 'rapuncel/core_ext/integer'
 require 'rapuncel/core_ext/big_decimal'
 require 'rapuncel/core_ext/float'

@@ -36,11 +36,6 @@ class Object
   end
 
   protected
-  def to_xml_rpc_name
-    #warn "No specific to_xml_rpc_name method written for this object (#{self.class.to_s}). The result may not be what you expect."
-    self.class.to_s.downcase
-  end
-  
   def _collect_ivars_in_hash
     {}.tap do |hsh|
       instance_variables.each do |ivar|

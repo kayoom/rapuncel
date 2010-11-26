@@ -11,9 +11,4 @@ class String
     
     xml_node.text #just give back the string between the 'string' tags
   end
-
-  protected
-  def to_xml_rpc_name #this suffices. go to object.rb to see why
-    "string"
-  end
 end
