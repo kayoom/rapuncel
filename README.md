@@ -123,16 +123,20 @@ note
     
 will return a Rapuncel::Response object, use _call\_to\_ruby_ to get standard ruby objects
 
-## What's missing (for now)?
+## Todo ?
 
 * Base64 support (or rather a consistent concept for Base64)
 * XMLRPC Extensions (pluggable support)
+* RDoc
+* Extensive functional tests
 
 ## What happens if something goes wrong?
 ### HTTP Errors
 Any HTTP response but 200 OK will raise an error, containing the returned status code and response body.
 ### XMLRPC Faults
 If the XMLRPC response is 'fault', a Rapuncel::Fault object will be returned, having a _code_ and a _string_ attribute
+### Malformed XML/XMLRPC
+Rapuncel will most likely fail hard.
 
 ## Open Source
 
