@@ -30,7 +30,7 @@ module Rapuncel
     def parse_fault
       fault = @xml_doc.xpath('/methodResponse/fault/value/struct')
       
-      @to_ruby = Fault.from_xml_rpc fault.first
+      @to_ruby = Fault.new Hash.from_xml_rpc(fault.first)
     end
     
     def parse_response

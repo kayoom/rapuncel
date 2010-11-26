@@ -58,7 +58,7 @@ _default_: basic **IF** user or password is set
 * **api\_key**
 If set, sends all request with a X-ApiKey: _api\_key_ header
 * **api\_key\_header**
-Allows you to modify the header key for API-Key auth
+Allows you to modify the header key for API-Key auth  
 _default_: X-ApiKey
 
 ### Get a proxy object and ... 
@@ -86,7 +86,9 @@ Rapuncel supports natively following object-types (and all their subclasses):
 * Float
 * Time
 
-All other objects are transformed into a Hash ('struct' in XMLRPC-speak) containing their instance variables as key-value-pairs.
+* Symbols are converted to Strings
+
+* All other objects are transformed into a Hash ('struct' in XMLRPC-speak) containing their instance variables as key-value-pairs.
 
 ## Supported methods
 You can use most methods via
@@ -103,3 +105,43 @@ or via
     client.call_to_ruby methodname, *args
     
 note client.call methodname, \*args will return a Rapuncel::Response object, use _call\_to\_ruby_ to get standard ruby objects
+
+## Whats missing (for now)?
+
+* Base64 support (or rather a consistent concept for Base64)
+* XMLRPC Extensions (pluggable support)
+
+## What happens if something goes wrong?
+### HTTP Errors
+Any HTTP response but 200 OK will raise an error, containing the returned status code and response body.
+### XMLRPC Faults
+If the XMLRPC response is 'fault', a Rapuncel::Fault object will be returned, having a _code_ and a _string_ attribute
+
+## Open Source
+
+### License
+
+Copyright (c) 2010 ['Marian Theisen', 'Michael Eickenberg']
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+### Contribution
+
+Pull requests are very welcome!

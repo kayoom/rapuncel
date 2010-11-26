@@ -14,12 +14,10 @@ class FunctionalClientTest < FunctionalTest
     client = Rapuncel::Client.new :port => 8080
     proxy = client.proxy_for 'num'
     
-    result = proxy.add 23, 23, 23
+    result = proxy.add 20, 20, 2
     
     assert_kind_of Rapuncel::Fault, result
   end
   
-  test 'RPC call to wrong host' do
-    
-  end
+
 end
