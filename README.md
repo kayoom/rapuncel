@@ -125,10 +125,11 @@ will return a Rapuncel::Response object, use _call\_to\_ruby_ to get standard ru
 
 ## Todo ?
 
-* Base64 support (or rather a consistent concept for Base64)
-* XMLRPC Extensions (pluggable support)
 * RDoc
 * Extensive functional tests
+* Async requests
+* Base64 support (or rather a consistent concept for Base64)
+* XMLRPC Extensions (pluggable support)
 
 ## What happens if something goes wrong?
 ### HTTP Errors

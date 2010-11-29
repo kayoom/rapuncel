@@ -16,9 +16,11 @@ module Rapuncel
       end
 
       def define_proxy_method name
-        define_method name do |*args|
-          call! name, *args
-        end
+        class_eval <<-RUBY, __FILE__, __LINE__ + 1
+          def #{name} *args, &block
+            call! '#{name}', *args, &block
+          end
+        RUBY
       end
     end
 
@@ -33,8 +35,14 @@ module Rapuncel
     end
 
     def call! name, *args
-      name = [@interface, name] * '.' if @interface
-      @client.execute_to_ruby Request.new(name, *args)
+      name = "#{@interface}.#{name}" if @interface
+      
+      @client.execute_to_ruby(Request.new(name, *args)).tap do |response|
+      
+        if block_given?
+          yield response
+        end
+      end
     end
 
     def __initialize__ client, interface
@@ -43,14 +51,18 @@ module Rapuncel
     end
 
     protected
-    def method_missing name, *args
+    def respond_to? name
+      LOCKED_PATTERN.match(name.to_s) ? super : true
+    end
+    
+    def method_missing name, *args, &block
       name = name.to_s
 
       if LOCKED_PATTERN.match name
         super
       else
         self.__class__.define_proxy_method name
-        call! name, *args
+        call! name, *args, &block
       end
     end
   end
