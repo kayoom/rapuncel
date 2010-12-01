@@ -2,11 +2,24 @@ require 'rapuncel/request'
 
 module Rapuncel
   class Proxy
-    PROXY_METHODS  = %w(tap inspect clone freeze dup class initialize)
-    LOCKED_METHODS = %w(method_missing)
-    LOCKED_PATTERN = /(\A__|\?\Z|!\Z)/
+    PROXY_METHODS  = %w(tap inspect clone freeze dup class initialize).freeze
+    LOCKED_METHODS = %w(method_missing).freeze
+    LOCKED_PATTERN = /(\A__|\?\Z|!\Z)/.freeze
 
     class << self
+      # Initialize a new Proxy object for a specific Client. Alternatively
+      # you can pass a Hash containing configuration for a new Client, which
+      # will be created on-the-fly, but not accessible. The second parameter
+      # specifies a specific interface/namespace for the remote calls,
+      # i.e. if your RPC method is
+      #     
+      #     int numbers.add(int a, int b)
+      #
+      # You can create a specific proxy for +numbers+, and use +add+ directly
+      #    
+      #     proxy = Proxy.new client, 'numbers'
+      #     proxy.add(40, 2) -> 42
+      #
       def new client_or_configuration, interface = nil        
         client_or_configuration = Client.new client_or_configuration if client_or_configuration.is_a?(Hash)
         
@@ -45,21 +58,21 @@ module Rapuncel
       end
     end
 
-    def __initialize__ client, interface
+    def __initialize__ client, interface #:nodoc:
       @interface = interface
       @client = client
     end
 
-    protected
-    def respond_to? name
+    def respond_to? name #:nodoc:
       LOCKED_PATTERN.match(name.to_s) ? super : true
     end
     
-    def method_missing name, *args, &block
+    protected
+    def method_missing name, *args, &block #:nodoc:
       name = name.to_s
 
       if LOCKED_PATTERN.match name
-        super
+        super name.to_sym, *args, &block
       else
         self.__class__.define_proxy_method name
         call! name, *args, &block

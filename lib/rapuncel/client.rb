@@ -17,11 +17,7 @@ module Rapuncel
     end
 
     def initialize configuration = {}
-      @connection = init_connection(configuration)
-    end
-
-    def init_connection configuration = {}
-      Connection.build configuration
+      @connection = Connection.build configuration
     end
 
     def call name, *args

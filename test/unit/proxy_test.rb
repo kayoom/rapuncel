@@ -42,11 +42,11 @@ class ProxyTest < ActiveSupport::TestCase
 
     p = Rapuncel::Proxy.new t
 
-    assert !p.respond_to?('foobar')
+    assert p.respond_to?('foobar')
+    assert !Rapuncel::Proxy.instance_methods.include?('foobar')
 
     p.foobar
 
-    v = Rapuncel::Proxy.new t
-    assert v.respond_to?('foobar')
+    assert Rapuncel::Proxy.instance_methods.include?('foobar')
   end
 end
