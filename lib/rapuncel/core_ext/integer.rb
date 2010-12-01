@@ -1,4 +1,4 @@
-require 'builder'
+
 require 'nokogiri'
 require 'ruby-debug'
 
@@ -9,6 +9,7 @@ class Integer
 
     b.int self.to_s
 
+    b.to_xml
   end
 
   def self.from_xml_rpc xml_node

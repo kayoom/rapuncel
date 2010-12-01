@@ -31,6 +31,7 @@ module Rapuncel
       fault = @xml_doc.xpath('/methodResponse/fault/value/struct')
       
       @to_ruby = Fault.new Hash.from_xml_rpc(fault.first)
+      raise Fault, @to_ruby.code, @to_ruby.string.split("\n")
     end
     
     def parse_response

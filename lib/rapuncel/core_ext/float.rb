@@ -1,4 +1,4 @@
-require 'builder'
+
 require 'nokogiri'
 
 class Float
@@ -10,5 +10,7 @@ class Float
   
   def to_xml_rpc b = Rapuncel.get_builder
     b.double to_s
+    
+    b.to_xml
   end
 end

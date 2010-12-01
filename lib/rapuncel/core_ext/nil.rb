@@ -1,11 +1,10 @@
-require 'builder'
+
 require 'nokogiri'
 
 class NilClass
-  
-  def to_xml_rpc
-    false.to_xml_rpc
+  def to_xml_rpc b = Rapuncel.get_builder
+    false.to_xml_rpc b
+    
+    b.to_xml
   end
-  
-  
 end

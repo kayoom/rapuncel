@@ -1,4 +1,4 @@
-require 'builder'
+
 
 
 module Rapuncel
@@ -13,13 +13,14 @@ module Rapuncel
 
     def to_xml_rpc builder = Rapuncel.get_builder
       method_call! builder
+      
+      builder.to_xml
     end
 
     protected
     def method_call! builder
-      builder.instruct!
 
-      builder.methodCall do
+      builder.methodCall do |builder|
         method_name! builder
         params! builder
       end
@@ -30,7 +31,7 @@ module Rapuncel
     end
 
     def params! builder
-      builder.params do
+      builder.params do |builder|
         arguments.each do |value|
           param! builder, value
         end
@@ -38,8 +39,8 @@ module Rapuncel
     end
 
     def param! builder, value
-      builder.param do
-        builder.value do
+      builder.param do |builder|
+        builder.value do |builder|
           value.to_xml_rpc builder
         end
       end

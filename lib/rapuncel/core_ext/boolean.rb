@@ -1,10 +1,12 @@
-require 'builder'
+
 require 'nokogiri'
 
 class TrueClass
 
   def to_xml_rpc b = Rapuncel.get_builder
     b.boolean "1"
+    
+    b.to_xml
   end
 end
 
@@ -13,6 +15,8 @@ class FalseClass
 
   def to_xml_rpc b = Rapuncel.get_builder
     b.boolean "0"
+    
+    b.to_xml
   end
 end
 

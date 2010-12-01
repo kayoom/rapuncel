@@ -1,5 +1,5 @@
 module Rapuncel
-  class Fault
+  class Fault < Exception
     attr_accessor :code, :string
     
     def initialize hsh

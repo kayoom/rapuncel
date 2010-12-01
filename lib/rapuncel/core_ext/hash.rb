@@ -1,4 +1,4 @@
-require 'builder'
+
 
 class Rapuncel::Hash
   
@@ -14,15 +14,17 @@ class Hash
 
         #warn "The key #{key.to_s} is a #{key.class.to_s}, which is neither a symbol nor a string. It will be converted using to_s" unless key.is_a?(String) || key.is_a?(Symbol)
 
-        b.member do
+        b.member do |b|
 
           b.name key.to_s
-          b.value do
+          b.value do |b|
             value.to_xml_rpc b
           end
         end
       end
     end
+    
+    b.to_xml
   end
   
   def self.from_xml_rpc xml_node

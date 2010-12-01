@@ -1,4 +1,4 @@
-require 'builder'
+
 
 class Object
   def to_xml_rpc b = Rapuncel.get_builder
@@ -7,6 +7,8 @@ class Object
     else    
       _collect_ivars_in_hash.to_xml_rpc b
     end
+    
+    b.to_xml
   end
 
   def self.from_xml_rpc xml_node
