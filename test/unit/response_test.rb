@@ -3,10 +3,10 @@ require 'test_helper'
 
 class ResponseTest < ActiveSupport::TestCase
   class MockReponse
-    attr_accessor :body
+    attr_accessor :body, :code
 
-    def initialize body, success = true
-      @body, @success = body, success
+    def initialize body, success = true, code = 200
+      @body, @success, @code = body, success, code
     end
 
     def success?
@@ -14,7 +14,7 @@ class ResponseTest < ActiveSupport::TestCase
     end
   end
 
-  test 'Response should be not an Array' do
+  test 'Response should not be an Array' do
     mock = MockReponse.new <<-XML
       <?xml version='1.0'?>
       <methodResponse>
