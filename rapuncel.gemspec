@@ -1,12 +1,12 @@
 Gem::Specification.new do |s|
   s.name        = "rapuncel"
-  s.version     = "0.0.1.alpha"
-  s.date        = Time.now.strftime("%Y-%m-%d")
+  s.version     = "0.0.1.preview"
+  s.date        = "2010-12-02"
   s.authors     = ["Michael Eickenberg", "Marian Theisen"]
   s.email       = 'marian@cice-online.net'
   s.summary     = "Simple XML-RPC Client"
   s.homepage    = "http://github.com/cice/rapuncel"
-  s.description = "Simple XML-RPC Client"
+  s.description = "Rapuncel is a simple XML-RPC Client based on Nokogiri, thus provides a fast and easy way to interact with XML-RPC services."
 
   s.files        =  Dir["**/*"] -
                     Dir["coverage/**/*"] -
