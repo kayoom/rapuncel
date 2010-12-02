@@ -13,7 +13,7 @@ module Rapuncel
 
     def to_xml_rpc builder = Rapuncel.get_builder
       method_call! builder
-      
+
       builder.to_xml :encoding => 'UTF-8'
     end
 

@@ -12,17 +12,17 @@ module Rapuncel
       # will be created on-the-fly, but not accessible. The second parameter
       # specifies a specific interface/namespace for the remote calls,
       # i.e. if your RPC method is
-      #     
+      #
       #     int numbers.add(int a, int b)
       #
       # You can create a specific proxy for +numbers+, and use +add+ directly
-      #    
+      #
       #     proxy = Proxy.new client, 'numbers'
       #     proxy.add(40, 2) -> 42
       #
-      def new client_or_configuration, interface = nil        
+      def new client_or_configuration, interface = nil
         client_or_configuration = Client.new client_or_configuration if client_or_configuration.is_a?(Hash)
-        
+
         allocate.__tap__ do |new_proxy|
           new_proxy.__initialize__ client_or_configuration, interface
         end
@@ -49,9 +49,9 @@ module Rapuncel
 
     def call! name, *args
       name = "#{@interface}.#{name}" if @interface
-      
-      @client.execute_to_ruby(Request.new(name, *args)).tap do |response|
-      
+
+      @client.call_to_ruby(name, *args).tap do |response|
+
         if block_given?
           yield response
         end
@@ -66,7 +66,7 @@ module Rapuncel
     def respond_to? name #:nodoc:
       LOCKED_PATTERN.match(name.to_s) ? super : true
     end
-    
+
     protected
     def method_missing name, *args, &block #:nodoc:
       name = name.to_s

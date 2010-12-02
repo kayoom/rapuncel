@@ -17,12 +17,12 @@ class TestServer
       s.add_handler(Num::INTERFACE, Num.new)
     end
   end
-  
+
   def start
     Thread.new { @server.serve }
   end
-  
+
   def stop
     @server.shutdown
-  end  
+  end
 end
