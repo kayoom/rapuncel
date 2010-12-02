@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "rapuncel"
-  s.version     = "0.0.1.preview"
+  s.version     = "0.0.1.alpha"
   s.date        = "2010-12-02"
   s.authors     = ["Michael Eickenberg", "Marian Theisen"]
   s.email       = 'marian@cice-online.net'
