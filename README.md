@@ -3,6 +3,9 @@
 Rapuncel ([wikipedia](http://en.wikipedia.org/wiki/Rapunzel)) is a simple and lightweight, but fast XML-RPC client library for ruby.
 It's based on Nokogiri for XML parsing and thus provides a major performance improvement for large XML responses.
 
+## Alpha release!
+Not everything is working yet, especially: SSL, HTTP Basic Auth, ApiKey-Auth. If in doubt, have a look at the functionality being auto-tested.
+
 ## Installation
 
 ### Rails
