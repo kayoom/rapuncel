@@ -1,5 +1,4 @@
 require 'active_support/core_ext/module/delegation'
-require 'rapuncel/fault'
 
 module Rapuncel
   class Response
