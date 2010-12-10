@@ -18,7 +18,7 @@ class FunctionalClientTest < FunctionalTest
       proxy.add 20, 20, 2
     end
     
-    assert_kind_of Rapuncel::Response::Fault, proxy.add(20, 20, 2)    
+    assert_kind_of Hash, proxy.add(20, 20, 2)    
   end
 
   test "Fault rpc call" do
@@ -48,7 +48,7 @@ class FunctionalClientTest < FunctionalTest
     end
     
     err = proxy.foo(:bar, :baz)
-    assert_kind_of Rapuncel::Response::Error, err
-    assert_equal 404, err.code
+    assert_kind_of Hash, err
+    assert_equal 404, err[:http_code]
   end
 end

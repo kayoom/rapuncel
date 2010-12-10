@@ -2,17 +2,7 @@ require 'active_support/core_ext/module/delegation'
 
 module Rapuncel
   class Response
-    class Exception < ::Exception
-      attr_accessor :code, :string
-
-      def initialize code, string
-        @code, @string = code, string
-      end
-
-      def exception
-        self
-      end
-    end
+    class Exception < ::Exception ; end
     class Fault < Exception ; end
     class Error < Exception ; end
 
@@ -53,16 +43,17 @@ module Rapuncel
       if fault?
         @fault ||= begin
           fault_node = parsed_body.xpath('/methodResponse/fault/value/struct').first
-          fault_hash = Hash.from_xml_rpc(fault_node)
-
-          Fault.new fault_hash[:faultCode], fault_hash[:faultString]
+          
+          Hash.from_xml_rpc(fault_node).tap do |h|
+            h[:faultString] = h[:faultString].strip
+          end
         end
       end
     end
 
     def error
       if error?
-        @error ||= Error.new @status_code, body
+        @error ||= { :http_code => @status_code, :http_body => body }
       end
     end
 

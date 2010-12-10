@@ -38,8 +38,8 @@ module Rapuncel
     def call_to_ruby name, *args
       response = call name, *args
 
-      raise_on_fault && response.fault? && raise(response.fault)
-      raise_on_error && response.error? && raise(response.error)
+      raise_on_fault && response.fault? && raise(Response::Fault, response.fault.inspect)
+      raise_on_error && response.error? && raise(Response::Error, response.error.inspect)
 
       response.to_ruby
     end

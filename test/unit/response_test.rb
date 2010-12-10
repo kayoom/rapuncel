@@ -77,10 +77,10 @@ class ResponseTest < ActiveSupport::TestCase
     assert !r.success?
     assert !r.error?
 
-    assert_kind_of Rapuncel::Response::Fault, r.to_ruby
-    assert_kind_of Rapuncel::Response::Fault, r.fault
+    assert_kind_of Hash, r.to_ruby
+    assert_kind_of Hash, r.fault
 
-    assert_equal 42, r.fault.code
+    assert_equal 42, r.fault[:faultCode]
   end
 
   test "Response should handle errors" do
@@ -92,9 +92,9 @@ class ResponseTest < ActiveSupport::TestCase
     assert !r.fault?
     assert !r.success?
 
-    assert_kind_of Rapuncel::Response::Error, r.to_ruby
-    assert_kind_of Rapuncel::Response::Error, r.error
+    assert_kind_of Hash, r.to_ruby
+    assert_kind_of Hash, r.error
 
-    assert_equal 404, r.error.code
+    assert_equal 404, r.error[:http_code]
   end
 end
