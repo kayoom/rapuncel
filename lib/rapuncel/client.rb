@@ -1,4 +1,4 @@
-require 'rapuncel/adapters/typhoeus_adapter'
+# require 'rapuncel/adapters/typhoeus_adapter'
 require 'rapuncel/adapters/net_http_adapter'
 require 'rapuncel/connection'
 

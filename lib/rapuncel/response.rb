@@ -36,7 +36,7 @@ module Rapuncel
     def parse_response
       @xml_doc = Nokogiri::XML.parse body
 
-      if @xml_doc.xpath('/methodResponse/fault').blank?
+      if @xml_doc.xpath('/methodResponse/fault').empty?
         @status = 'success'
         parse_success
       else
