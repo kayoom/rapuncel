@@ -17,7 +17,7 @@ module Rapuncel
     alias_method :ssl?, :ssl
 
     def initialize configuration = {}
-      
+
       @host     = configuration[:host]    || 'localhost'
       @port     = configuration[:port]    || '8080'
       @path     = configuration[:path]    || '/'
@@ -33,7 +33,7 @@ module Rapuncel
     def url
       "http://#{host}:#{port}#{path}"
     end
-    
+
     def headers
       @headers.merge  :Accept => 'text/xml', :'content-type' => 'text/xml'
     end

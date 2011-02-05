@@ -1,21 +1,21 @@
-require 'builder'
-
 class Object
   def to_xml_rpc b = Rapuncel.get_builder
     if respond_to?(:acts_like?) && acts_like?(:time)
       to_time.to_xml_rpc b
-    else    
+    else
       _collect_ivars_in_hash.to_xml_rpc b
     end
+
+    b.to_xml
   end
 
   def self.from_xml_rpc xml_node
     if xml_node.is_a? String
       xml_node = Nokogiri::XML.parse(xml_node).root
     end
-    
+
     return nil if xml_node.nil?
-    
+
     case xml_node.name
     when 'i4', 'int'
       Integer.from_xml_rpc xml_node
@@ -34,7 +34,7 @@ class Object
     when 'base64'
       raise 'Now its time to implement Base64'
     else
-      raise "What is this? I didn't know #{xml_node.name} was part of the XMLRPC specification? Anyway, the value was: #{xml_node.text}"
+      raise "What is this? I didn't know #{xml_node.name} was part of the XMLRPC specification? Anyway, the value was: #{xml_node.text.strip}"
     end
   end
 

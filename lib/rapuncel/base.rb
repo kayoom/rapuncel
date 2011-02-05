@@ -1,7 +1,7 @@
 module Rapuncel
-  BUILDER_OPTIONS = {}
+  BUILDER_OPTIONS = {:encoding => 'UTF-8'}
 
   def self.get_builder options = {}
-    Builder::XmlMarkup.new BUILDER_OPTIONS.merge(options)
+    Nokogiri::XML::Builder.new options
   end
 end

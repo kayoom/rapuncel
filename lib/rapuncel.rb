@@ -1,4 +1,4 @@
-require 'builder'
+
 
 require 'active_support/core_ext/hash/keys'
 
@@ -20,5 +20,6 @@ require 'rapuncel/core_ext/float'
 require 'rapuncel/core_ext/hash'
 require 'rapuncel/core_ext/array'
 require 'rapuncel/core_ext/boolean'
+require 'rapuncel/core_ext/nil'
 
 require 'rapuncel/core_ext/time'

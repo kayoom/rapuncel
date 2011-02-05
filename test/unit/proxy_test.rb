@@ -2,14 +2,14 @@ require 'test_helper'
 
 class ProxyTest < ActiveSupport::TestCase
   class TestClient
-    def execute_to_ruby request
-      request
+    def call_to_ruby request, *args
+      [request] + args
     end
   end
 
   test "Proxy should still provide __ methods" do
     t = Object.new
-    t.expects(:execute_to_ruby).never
+    t.expects(:call_to_ruby).never
 
     p = Rapuncel::Proxy.new t
 
@@ -24,7 +24,7 @@ class ProxyTest < ActiveSupport::TestCase
     p = Rapuncel::Proxy.new t
     request = p.inspect
 
-    assert_equal 'inspect', request.method_name
+    assert_equal 'inspect', request.first
   end
 
   test "Proxy should delegate non-existing methods to Client" do
@@ -33,8 +33,8 @@ class ProxyTest < ActiveSupport::TestCase
     p = Rapuncel::Proxy.new t
     request = p.whatever 'arg1', 'foobar', 1234
 
-    assert_equal 'whatever', request.method_name
-    assert_equal ['arg1', 'foobar', 1234], request.arguments
+    assert_equal 'whatever', request.first
+    assert_equal ['arg1', 'foobar', 1234], request[1..-1]
   end
 
   test "Proxy should dynamically define methods as soon as needed" do
@@ -42,11 +42,11 @@ class ProxyTest < ActiveSupport::TestCase
 
     p = Rapuncel::Proxy.new t
 
-    assert !p.respond_to?('foobar')
+    assert p.respond_to?('foobar')
+    assert !Rapuncel::Proxy.instance_methods.include?('foobar')
 
     p.foobar
 
-    v = Rapuncel::Proxy.new t
-    assert v.respond_to?('foobar')
+    assert Rapuncel::Proxy.instance_methods.include?('foobar')
   end
 end
