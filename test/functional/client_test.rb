@@ -2,7 +2,7 @@ require 'functional_test_helper'
 
 class FunctionalClientTest < FunctionalTest
   test "Simple XMLRPC call" do
-    client = Rapuncel::Client.new :port => 8080, :raise_on => :both
+    client = Rapuncel::Client.new :port => 9485, :raise_on => :both
     proxy = client.proxy_for 'num'
 
     result = proxy.add 40, 2
@@ -11,7 +11,7 @@ class FunctionalClientTest < FunctionalTest
   end
   
   test "Fault rpc call without raise" do
-    client = Rapuncel::Client.new :port => 8080
+    client = Rapuncel::Client.new :port => 9485
     proxy = client.proxy_for 'num'
     
     assert_nothing_raised Rapuncel::Response::Exception do
@@ -22,7 +22,7 @@ class FunctionalClientTest < FunctionalTest
   end
 
   test "Fault rpc call" do
-    client = Rapuncel::Client.new :port => 8080, :raise_on => :both
+    client = Rapuncel::Client.new :port => 9485, :raise_on => :both
     proxy = client.proxy_for 'num'
     
     assert_raise Rapuncel::Response::Fault do

@@ -38,8 +38,8 @@ module Rapuncel
     def call_to_ruby name, *args
       response = call name, *args
 
-      raise_on_fault && response.fault? && raise(Response::Fault, response.fault.inspect)
-      raise_on_error && response.error? && raise(Response::Error, response.error.inspect)
+      raise_on_fault && response.fault? && raise_fault(response)
+      raise_on_error && response.error? && raise_error(response)
 
       response.to_ruby
     end
@@ -49,6 +49,15 @@ module Rapuncel
       xml = request.to_xml_rpc
 
       Response.new send_method_call(xml)
+    end
+    
+    private
+    def raise_fault response
+      raise(Response::Fault, response.fault[:faultCode], response.fault[:faultString].split("\n"))
+    end
+    
+    def raise_error response
+      raise(Response::Error, "HTTP Error: #{response.error.inspect}")
     end
   end
 end
