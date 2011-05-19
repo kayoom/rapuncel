@@ -47,6 +47,6 @@ class ProxyTest < ActiveSupport::TestCase
 
     p.foobar
 
-    assert Rapuncel::Proxy.instance_methods.include?('foobar')
+    assert (Rapuncel::Proxy.instance_methods.include?('foobar') || Rapuncel::Proxy.instance_methods.include?(:foobar))
   end
 end

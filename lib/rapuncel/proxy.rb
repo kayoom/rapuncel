@@ -2,7 +2,7 @@ require 'rapuncel/request'
 
 module Rapuncel
   class Proxy
-    PROXY_METHODS  = %w(tap inspect clone freeze dup class initialize).freeze
+    PROXY_METHODS  = %w(tap inspect clone freeze dup class initialize to_s).freeze
     LOCKED_METHODS = %w(method_missing).freeze
     LOCKED_PATTERN = /(\A__|\?\Z|!\Z)/.freeze
 
@@ -40,6 +40,8 @@ module Rapuncel
     PROXY_METHODS.each do |name|
       alias_method "__#{name}__", name
     end
+    
+    alias_method "__inspect__", "__to_s__"
 
     instance_methods.each do |name|
       unless LOCKED_METHODS.include?(name) || LOCKED_PATTERN.match(name)
