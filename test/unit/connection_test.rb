@@ -6,6 +6,18 @@ class ConnectionTest < ActiveSupport::TestCase
     assert_kind_of Rapuncel::AuthConnection, Rapuncel::Connection.build(:user => '')
     assert_kind_of Rapuncel::AuthConnection, Rapuncel::Connection.build(:password => '')
   end
+  
+  test "Connection should not choke on extra 'http://' in @host" do
+    connection = Rapuncel::Connection.build :host => "http://example.org"
+    
+    assert_equal "example.org", connection.host
+  end
+  
+  test "Connection should accept path beginning with or without /" do
+    connection = Rapuncel::Connection.build :host => "http://example.org", :path => "abcd"
+
+    assert_equal "/abcd", connection.path
+  end
 
   test "Connection.new should return an ApiKeyAuthConnection if api_key is set" do
     assert_kind_of Rapuncel::ApiKeyAuthConnection, Rapuncel::Connection.build(:api_key => 'xyz')

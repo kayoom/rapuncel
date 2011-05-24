@@ -18,11 +18,10 @@ module Rapuncel
 
     def initialize configuration = {}
 
-      @host     = configuration[:host]    || 'localhost'
-      @port     = configuration[:port]    || '8080'
-      @path     = configuration[:path]    || '/'
-      @headers  = configuration[:headers] || {}
-
+      self.host     = configuration[:host]    || 'localhost'
+      self.port     = configuration[:port]    || '8080'
+      self.path     = configuration[:path]    || '/'
+      self.headers  = configuration[:headers] || {}
 
       if ssl = configuration[:ssl]
         @ssl = true
@@ -32,6 +31,18 @@ module Rapuncel
 
     def url
       "http://#{host}:#{port}#{path}"
+    end
+    
+    def host= value
+      @host = value.to_s.sub /^http\:\/\//, ''
+    end
+    
+    def path= value
+      unless value =~ /^\//
+        value = "/" + value
+      end
+      
+      @path = value
     end
 
     def headers
