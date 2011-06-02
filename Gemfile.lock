@@ -1,0 +1,21 @@
+PATH
+  remote: .
+  specs:
+    rapuncel (0.0.4)
+      activesupport (>= 3.0.0)
+      nokogiri
+
+GEM
+  specs:
+    activesupport (3.0.6)
+    mocha (0.9.11)
+      rake
+    nokogiri (1.4.4)
+    rake (0.8.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  mocha
+  rapuncel!

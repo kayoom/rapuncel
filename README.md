@@ -134,6 +134,9 @@ will return a Rapuncel::Response object, use _call\_to\_ruby_ to get standard ru
 
 * RDoc
 * Extensive functional tests
+* HTTPS
+* HTTP-Proxy support
+* Usable concept for ApiKeys / sending arbitrary additional HTTP header 
 * Async requests
 * Base64 support (or rather a consistent concept for Base64)
 * XMLRPC Extensions (pluggable support)
