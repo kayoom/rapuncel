@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Integer do
   it "serialization" do
-    123.to_xml_rpc.should have_xpath('/int', :content => "123")
+    Rapuncel::XmlRpcSerializer[123].should have_xpath('/int', :content => "123")
   end
   
   it "deserialization of int" do
@@ -10,7 +10,7 @@ describe Integer do
       <int>123</int>
     XML
     
-    Object.from_xml_rpc(xml).should == 123
+    Rapuncel::XmlRpcDeserializer[xml].should == 123
   end
   
   it 'deserialization of i4' do
@@ -18,6 +18,6 @@ describe Integer do
       <i4>123</i4>
     XML
     
-    Object.from_xml_rpc(xml).should == 123
+    Rapuncel::XmlRpcDeserializer[xml].should == 123
   end
 end

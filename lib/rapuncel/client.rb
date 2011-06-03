@@ -46,7 +46,7 @@ module Rapuncel
 
     protected
     def execute request
-      xml = request.to_xml_rpc
+      xml = XmlRpcSerializer.new(request).to_xml
 
       Response.new send_method_call(xml)
     end

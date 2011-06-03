@@ -10,7 +10,7 @@ describe Hash do
         BigDecimal.new('1.23') => "abcd"
       }
       
-      @xml = @hash.to_xml_rpc
+      @xml = Rapuncel::XmlRpcSerializer[@hash]
     end
     
     it 'preserves number of key-value pairs' do
@@ -35,7 +35,7 @@ describe Hash do
         </struct>
       XML
       
-      @hash = Object.from_xml_rpc @xml
+      @hash = Rapuncel::XmlRpcDeserializer[@xml]
     end
     
     it 'preserves number of key-value pairs' do

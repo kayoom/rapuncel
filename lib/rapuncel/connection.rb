@@ -30,11 +30,13 @@ module Rapuncel
     end
     
     def headers= headers
-      @headers = headers.stringify_keys
+      @headers = {
+        'User-Agent' => 'Rapuncel, Ruby XMLRPC Client'
+      }.merge headers.stringify_keys
     end
 
     def headers
-      @headers.merge  'Accept' => 'text/xml', 'content-type' => 'text/xml'
+      @headers.merge 'Accept' => 'text/xml', 'content-type' => 'text/xml'
     end
     
     def protocol

@@ -1,4 +1,5 @@
 require 'active_support/core_ext/module/delegation'
+require 'rapuncel/xml_rpc_deserializer'
 
 module Rapuncel
   class Response
@@ -6,7 +7,7 @@ module Rapuncel
     class Fault < Exception ; end
     class Error < Exception ; end
 
-    attr_accessor :http_response, :status, :status_code
+    attr_accessor :http_response, :status, :status_code, :response
 
     delegate  :body,
               :to => :http_response
@@ -20,10 +21,16 @@ module Rapuncel
     def evaluate_status
       @status_code = http_response.code.to_i
 
-      @status = case
-      when !http_response.success?                  then 'error'
-      when parsed_body && method_response_success?  then 'success'
-      else 'fault'
+      @status = unless http_response.success?
+        'error'
+      else
+        deserialize_response
+        
+        if Hash === response && response[:faultCode]
+          'fault'
+        else
+          'success'
+        end
       end
     end
 
@@ -40,31 +47,15 @@ module Rapuncel
     end
 
     def fault
-      if fault?
-        @fault ||= begin
-          fault_node = parsed_body.xpath('/methodResponse/fault/value/struct').first
-          
-          Hash.from_xml_rpc(fault_node).tap do |h|
-            h[:faultString] = h[:faultString].strip
-          end
-        end
-      end
+      fault? && @response
     end
 
     def error
-      if error?
-        @error ||= { :http_code => @status_code, :http_body => body }
-      end
+      error? && { :http_code => @status_code, :http_body => body }
     end
 
     def result
-      if success?
-        @result ||= begin
-          return_values = parsed_body.xpath('/methodResponse/params/param/value/*')
-
-          Object.from_xml_rpc return_values.first
-        end
-      end
+      success? && @response
     end
 
     def to_ruby
@@ -72,12 +63,8 @@ module Rapuncel
     end
 
     protected
-    def parsed_body
-      @xml_doc ||= Nokogiri::XML.parse body
-    end
-
-    def method_response_success?
-      parsed_body.xpath('/methodResponse/fault').empty?
+    def deserialize_response
+      @response = XmlRpcDeserializer.new(body).to_ruby
     end
   end
 end

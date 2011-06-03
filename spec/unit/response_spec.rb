@@ -69,7 +69,6 @@ describe Rapuncel::Response do
     response = Rapuncel::Response.new fault_response
     response.should be_fault
     
-    response.result.should be_nil
     response.to_ruby.should be_a Hash
     response.to_ruby[:faultCode].should == 42
   end
@@ -79,7 +78,7 @@ describe Rapuncel::Response do
     
     response = Rapuncel::Response.new error_response
     response.should be_error
-    response.result.should be_nil
+    
     response.to_ruby.should be_a Hash
     response.to_ruby[:http_code].should == 404
   end

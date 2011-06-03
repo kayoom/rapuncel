@@ -3,11 +3,11 @@ require 'spec_helper'
 describe TrueClass, FalseClass do
   describe "Serialization" do
     it 'represents true as 1' do
-      true.to_xml_rpc.should have_xpath('/boolean', :content => '1')
+      Rapuncel::XmlRpcSerializer[true].should have_xpath('/boolean', :content => '1')
     end
     
     it 'represents false as 0' do
-      false.to_xml_rpc.should have_xpath('/boolean', :content => '0')
+      Rapuncel::XmlRpcSerializer[false].should have_xpath('/boolean', :content => '0')
     end
   end
   
@@ -17,7 +17,7 @@ describe TrueClass, FalseClass do
         <boolean>1</boolean>
       XML
       
-      Object.from_xml_rpc(xml).should be_a TrueClass
+      Rapuncel::XmlRpcDeserializer[xml].should be_a TrueClass
     end
     
     it 'reads 0 as false' do
@@ -25,7 +25,7 @@ describe TrueClass, FalseClass do
         <boolean>0</boolean>
       XML
       
-      Object.from_xml_rpc(xml).should be_a FalseClass
+      Rapuncel::XmlRpcDeserializer[xml].should be_a FalseClass
     end
     
     it 'reads anything else as false' do
@@ -33,7 +33,7 @@ describe TrueClass, FalseClass do
         <boolean>abcd</boolean>
       XML
       
-      Object.from_xml_rpc(xml).should be_a FalseClass
+      Rapuncel::XmlRpcDeserializer[xml].should be_a FalseClass
     end
   end
 end
