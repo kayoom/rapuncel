@@ -1,40 +1,24 @@
 module Rapuncel
   class Connection
-    def self.build configuration = {}
-      configuration = configuration.symbolize_keys
-
-      case
-      when configuration[:user], configuration[:auth_method], configuration[:password]
-        AuthConnection.new configuration
-      when configuration[:api_key_header], configuration[:api_key]
-        ApiKeyAuthConnection.new configuration
-      else
-        new configuration
-      end
-    end
-
-    attr_accessor :host, :port, :path, :ssl, :headers
+    attr_accessor :host, :port, :path, :ssl, :user, :passwd
     alias_method :ssl?, :ssl
 
     def initialize configuration = {}
-
-      self.host     = configuration[:host]    || 'localhost'
-      self.port     = configuration[:port]    || '8080'
-      self.path     = configuration[:path]    || '/'
-      self.headers  = configuration[:headers] || {}
-
-      if ssl = configuration[:ssl]
-        @ssl = true
-        #TODO
-      end
+      load_configuration configuration
     end
 
     def url
-      "http://#{host}:#{port}#{path}"
+      "#{protocol}://#{host}:#{port}#{path}"
     end
     
     def host= value
-      @host = value.to_s.sub /^http\:\/\//, ''
+      @host = value.to_s.sub /^http(s)?\:\/\//, ''
+      
+      if $1 == 's'
+        @ssl = true
+      end
+      
+      @host
     end
     
     def path= value
@@ -44,43 +28,34 @@ module Rapuncel
       
       @path = value
     end
-
-    def headers
-      @headers.merge  :Accept => 'text/xml', :'content-type' => 'text/xml'
-    end
-
-    def http_auth? ; false ; end
-    def api_auth? ; false ; end
-  end
-
-  class AuthConnection < Connection
-    attr_accessor :auth_method, :user, :password
-
-    def initialize configuration = {}
-      super
-
-      @auth_method  = auth_method               || 'basic'
-      @user         = user                      || ''
-      @password     = configuration[:password]  || ''
-    end
-
-    def http_auth? ; true ; end
-  end
-
-  class ApiKeyAuthConnection < Connection
-    attr_accessor :api_key_header, :api_key
-
-    def initialize configuration = {}
-      super
-
-      @api_key_header = configuration[:api_key_header] || "X-ApiKey"
-      @api_key        = configuration[:api_key]        || '' #DISCUSS: raise error ?
+    
+    def headers= headers
+      @headers = headers.stringify_keys
     end
 
     def headers
-      super.merge api_key_header => api_key
+      @headers.merge  'Accept' => 'text/xml', 'content-type' => 'text/xml'
     end
-
-    def api_auth? ; true ; end
+    
+    def protocol
+      ssl? ? 'https' : 'http'
+    end
+    
+    def auth?
+      !!user && !!passwd
+    end
+    
+    protected
+    def load_configuration configuration
+      configuration = configuration.symbolize_keys
+      
+      self.ssl      = !!configuration[:ssl]
+      self.host     = configuration[:host]    || 'localhost'
+      self.port     = configuration[:port]    || '8080'
+      self.path     = configuration[:path]    || '/'
+      self.headers  = configuration[:headers] || {}
+      self.user     = configuration[:user]
+      self.passwd   = configuration[:passwd]
+    end
   end
 end

@@ -17,7 +17,7 @@ module Rapuncel
     end
 
     def initialize configuration = {}
-      @connection = Connection.build configuration.except(:raise_on)
+      @connection = Connection.new configuration.except(:raise_on)
 
       @raise_on_fault, @raise_on_error = case configuration[:raise_on]
       when :fault

@@ -1,11 +1,10 @@
 require 'net/http'
-require 'active_support/memoizable'
+require 'net/https'
 
 module Rapuncel
   module Adapters
     module NetHttpAdapter
-      extend ActiveSupport::Memoizable
-
+      # Small response wrapper
       class HttpResponse
         def initialize response
           @response = response
@@ -24,10 +23,13 @@ module Rapuncel
         end
       end
 
+      # Dispatch a XMLRPC via HTTP and return a response object.
       def send_method_call str
-        req = Net::HTTP.new connection.host, connection.port
+        request = Net::HTTP.new connection.host, connection.port
+        request.use_ssl = connection.ssl?
+        request.basic_auth connection.user, connection.passwd if connection.auth?
 
-        HttpResponse.new req.post(connection.path, str, connection.headers.stringify_keys)
+        HttpResponse.new request.post(connection.path, str, connection.headers)
       end
     end
   end
