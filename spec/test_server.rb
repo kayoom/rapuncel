@@ -1,6 +1,5 @@
 require "xmlrpc/server"
 require 'rubygems'
-require 'faker'
 
 class Num
   INTERFACE = XMLRPC::interface("num") {

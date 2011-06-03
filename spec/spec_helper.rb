@@ -3,6 +3,7 @@ require 'bundler/setup'
 
 require 'nokogiri'
 require 'rapuncel'
+require 'test_server'
 
 module SpecHelper
   def anythings count
@@ -11,7 +12,14 @@ module SpecHelper
 end
 
 RSpec.configure do |config|
-  # some (optional) config here
+  config.before :all do
+    @server = TestServer.new
+    @server.start
+  end
+  
+  config.after :all do
+    @server.stop
+  end
 end
 
 String.class_eval do
