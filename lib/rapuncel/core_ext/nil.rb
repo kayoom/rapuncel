@@ -1,7 +1,7 @@
 class NilClass
-  def to_xml_rpc b = Rapuncel.get_builder
-    false.to_xml_rpc b
+  def to_xml_rpc builder = Rapuncel.get_builder
+    false.to_xml_rpc builder
 
-    b.to_xml
+    builder.to_xml
   end
 end

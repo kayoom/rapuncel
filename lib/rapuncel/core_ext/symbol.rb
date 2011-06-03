@@ -1,7 +1,7 @@
 class Symbol
-  def to_xml_rpc b = Rapuncel.get_builder
-    b.string to_s
+  def to_xml_rpc builder = Rapuncel.get_builder
+    builder.string to_s
 
-    b.to_xml
+    builder.to_xml
   end
 end

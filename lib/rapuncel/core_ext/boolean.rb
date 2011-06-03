@@ -1,24 +1,22 @@
 class TrueClass
-  def to_xml_rpc b = Rapuncel.get_builder
-    b.boolean "1"
+  def to_xml_rpc builder = Rapuncel.get_builder
+    builder.boolean "1"
 
-    b.to_xml
+    builder.to_xml
   end
 end
 
 class FalseClass
-  def to_xml_rpc b = Rapuncel.get_builder
-    b.boolean "0"
+  def to_xml_rpc builder = Rapuncel.get_builder
+    builder.boolean "0"
 
-    b.to_xml
+    builder.to_xml
   end
 end
 
-# this is to catch the from_xml_rpc call from Object
 class Rapuncel::Boolean
   def self.from_xml_rpc xml_node
 
-    # DISCUSS: need convention here:
     case xml_node.text.downcase
     when '1'
       true

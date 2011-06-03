@@ -11,9 +11,9 @@ class Float
     end
   end
 
-  def to_xml_rpc b = Rapuncel.get_builder
-    b.double to_s
+  def to_xml_rpc builder = Rapuncel.get_builder
+    builder.double to_s
 
-    b.to_xml
+    builder.to_xml
   end
 end

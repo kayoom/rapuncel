@@ -1,12 +1,12 @@
 class Object
-  def to_xml_rpc b = Rapuncel.get_builder
+  def to_xml_rpc builder = Rapuncel.get_builder
     if respond_to?(:acts_like?) && acts_like?(:time)
-      to_time.to_xml_rpc b
+      to_time.to_xml_rpc builder
     else
-      _collect_ivars_in_hash.to_xml_rpc b
+      _collect_ivars_in_hash.to_xml_rpc builder
     end
 
-    b.to_xml
+    builder.to_xml
   end
 
   def self.from_xml_rpc xml_node

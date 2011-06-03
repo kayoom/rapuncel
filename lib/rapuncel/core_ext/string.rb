@@ -1,8 +1,8 @@
 class String
-  def to_xml_rpc b = Rapuncel.get_builder
-    b.string self
+  def to_xml_rpc builder = Rapuncel.get_builder
+    builder.string self
 
-    b.to_xml
+    builder.to_xml
   end
 
   def self.from_xml_rpc xml_node

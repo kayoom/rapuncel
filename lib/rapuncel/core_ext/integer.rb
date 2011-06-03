@@ -1,8 +1,8 @@
 class Integer
-  def to_xml_rpc b = Rapuncel.get_builder
-    b.int self.to_s
+  def to_xml_rpc builder = Rapuncel.get_builder
+    builder.int to_s
 
-    b.to_xml
+    builder.to_xml
   end
 
   def self.from_xml_rpc xml_node

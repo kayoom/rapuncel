@@ -1,21 +1,20 @@
 class Hash
-  # Hash will be translated into an XML-RPC "struct" object
-
-  def to_xml_rpc b = Rapuncel.get_builder
-    b.struct do |b|
+  def to_xml_rpc builder = Rapuncel.get_builder
+    builder.struct do |builder|
       self.each_pair do |key, value|
-        b.member do |b|
+        builder.member do |builder|
+          # Get a better string representation of BigDecimals
           key = key.to_s("F") if BigDecimal === key
-          b.name key.to_s
+          builder.name key.to_s
 
-          b.value do |b|
-            value.to_xml_rpc b
+          builder.value do |builder|
+            value.to_xml_rpc builder
           end
         end
       end
     end
 
-    b.to_xml
+    builder.to_xml
   end
 
   def self.from_xml_rpc xml_node

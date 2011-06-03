@@ -1,16 +1,16 @@
 class Array
-  def to_xml_rpc b = Rapuncel.get_builder
-    b.array do |b|
-      b.data do |b|
+  def to_xml_rpc builder = Rapuncel.get_builder
+    builder.array do |builder|
+      builder.data do |builder|
         each do |array_entry|
-          b.value do |b|
-            array_entry.to_xml_rpc b
+          builder.value do |builder|
+            array_entry.to_xml_rpc builder
           end
         end
       end
     end
 
-    b.to_xml
+    builder.to_xml
   end
 
   def self.from_xml_rpc xml_node
