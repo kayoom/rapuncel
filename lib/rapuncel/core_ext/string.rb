@@ -6,7 +6,6 @@ class String
   end
 
   def self.from_xml_rpc xml_node
-    xml_node.text.gsub(/(\r\n|\r)/, "\n") #just give back the string between the 'string' tags
-    # DISCUSS: to strip or not to strip
+    xml_node.text.gsub(/(\r\n|\r)/, "\n")
   end
 end

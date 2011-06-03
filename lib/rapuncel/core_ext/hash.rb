@@ -5,6 +5,7 @@ class Hash
     b.struct do |b|
       self.each_pair do |key, value|
         b.member do |b|
+          key = key.to_s("F") if BigDecimal === key
           b.name key.to_s
 
           b.value do |b|
