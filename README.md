@@ -3,8 +3,12 @@
 Rapuncel ([wikipedia](http://en.wikipedia.org/wiki/Rapunzel)) is a simple and lightweight, but fast XML-RPC client library for ruby.
 It's based on Nokogiri for XML parsing and thus provides a major performance improvement for large XML responses.
 
-## Alpha release!
-Not everything is working yet, especially: SSL, HTTP Basic Auth, ApiKey-Auth. If in doubt, have a look at the functionality being auto-tested.
+## I need your help
+I currently have exactly 1 application for Rapuncel, and that's [Kangaroo](https://github.com/cice/kangARoo), i.e.
+the OpenERP XMLRPC service, where it works absolutely fine. To improve Rapuncel i need your experience with
+other services and their quirks.
+  
+This Readme is for the upcoming 0.1 release, 0.0.x Readme [here](https://github.com/cice/rapuncel/blob/be19d4427dba14dbc656de1d90501f9d42aa4ef8/README.md) 
 
 ## Installation
 
@@ -53,16 +57,14 @@ _default_: /
 Username for HTTP Authentication
 _default_: _empty_
 * **password**
-Username for HTTP Authentication
+Password for HTTP Authentication
 _default_: _empty_
-* **auth\_method**
-HTTP Auth method
-_default_: basic **IF** user or password is set
-* **api\_key**
-If set, sends all request with a X-ApiKey: _api\_key_ header
-* **api\_key\_header**
-Allows you to modify the header key for API-Key auth
-_default_: X-ApiKey
+* **headers**
+Hash to set additional HTTP headers for the request, e.g. to send an X-ApiKey header for authentication
+_default_: {}
+* **ssl**
+Flag wether to use SSL
+_default_: false
 * **raise_on**
 Lets you define the behavior on errors or faults, if set to _:fault_, _:error_ or _:both_,
 an Exception will be raised if something goes wrong
@@ -92,23 +94,20 @@ Rapuncel supports natively following object-types (and all their subclasses):
 * Float
 * BigDecimal (treated like Float)
 * Time, Time-like objects
+* Base64
 
 * Symbols are converted to Strings
-
+* All Hashs have symbol keys
 * All other objects are transformed into a Hash ('struct' in XMLRPC-speak) containing their instance variables as key-value-pairs.
 
-### Can i customize this behavior for my objects?
-Yes you can, and it's dead simple, just override _to\_xml\_rpc_ with following signature (this is taken from Symbol#to\_xml\_rpc):
+## Base64
+If you want a string to be encoded as Base64 in your RPC call, just mark it:
 
-    def to_xml_rpc(builder = Rapuncel.get_builder)
-      self.to_s.to_xml_rpc(builder)
-    end
-
-Of course you don't have to delegate to #to\_s, you just can use the Builder object directly
-
-    def to_xml_rpc(builder = Rapuncel.get_builder)
-      builder.string(self.to_s)
-    end
+    proxy.some_method "my base64 encoded string".as_base64
+    
+Return values that arrive Base64 encoded, are instances of Rapuncel::Base64String,
+which is a subclass of String, and therefore can be used as such, but allows you to differentiate
+Base64 return values from normal String return values.
 
 ## Supported methods
 You can use most methods via
@@ -130,16 +129,25 @@ note
 
 will return a Rapuncel::Response object, use _call\_to\_ruby_ to get standard ruby objects
 
+## Deserialization options
+
+At the moment there are 2 options, to be set quite ugly as class attributes on Rapuncel::XmlRpcDeserializer,
+which will definitely change.
+
+1. **double\_as\_bigdecimal**
+Deserialize all <double> tags as BigDecimal.
+2. **hash\_keys\_as\_string**
+Don't use Symbols as keys for deserialized <struct>, but Strings.
+
+
 ## Todo ?
 
 * RDoc
 * Extensive functional tests
-* HTTPS
 * HTTP-Proxy support
-* Usable concept for ApiKeys / sending arbitrary additional HTTP header 
 * Async requests
-* Base64 support (or rather a consistent concept for Base64)
 * XMLRPC Extensions (pluggable support)
+* How do i test SSL?
 
 ## What happens if something goes wrong?
 ### HTTP Errors / XMLRPC Faults

@@ -10,6 +10,10 @@ module Rapuncel
       send "deserialize_#{xml_node.name}", xml_node
     end
     
+    def deserialize_base64 xml_node
+      Base64String.decode_base64 xml_node.text.strip
+    end
+    
     def deserialize_string xml_node
       xml_node.text.gsub(/(\r\n|\r)/, "\n")
     end
@@ -42,7 +46,7 @@ module Rapuncel
       {}.tap do |hash|
         keys_and_values.each do |key_value|
           key = key_value.first_element_child.text.strip
-          key = key.to_sym unless hash_key_as_string?
+          key = key.to_sym unless hash_keys_as_string?
           
           value = deserialize key_value.last_element_child.first_element_child
 
@@ -91,12 +95,12 @@ module Rapuncel
       !!self.class.double_as_bigdecimal
     end
     
-    def hash_key_as_string?
-      !!self.class.hash_key_as_string
+    def hash_keys_as_string?
+      !!self.class.hash_keys_as_string
     end
     
     class << self
-      attr_accessor :double_as_bigdecimal, :hash_key_as_string
+      attr_accessor :double_as_bigdecimal, :hash_keys_as_string
       
       def [] xml
         new(xml).to_ruby

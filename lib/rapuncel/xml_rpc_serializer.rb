@@ -15,6 +15,8 @@ module Rapuncel
     
     def serialize object
       case object
+      when Base64String
+        serialize_base64 object
       when Array
         serialize_array object
       when String, Symbol
@@ -46,6 +48,10 @@ module Rapuncel
       end
       
       self
+    end
+    
+    def serialize_base64 string
+      builder.base64 string.base64_encoded
     end
     
     def serialize_array array
