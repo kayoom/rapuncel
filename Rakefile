@@ -2,8 +2,6 @@ require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-desc 'Default: run unit tests.'
-task :default => :test
 
 desc 'Generate Rapuncel rdoc.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
@@ -21,3 +19,6 @@ begin
 rescue LoadError
   puts "RSpec is not available. In order to run specs, you must: gem install rspec"
 end
+
+desc 'Default: run unit tests.'
+task :default => :spec
