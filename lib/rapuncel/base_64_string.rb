@@ -10,22 +10,27 @@ end
 
 module Rapuncel
   class Base64String < String
-    def base64_encoded
-      if RUBY_VERSION =~ /^1\.9/
+
+    if RUBY_VERSION =~ /^1\.9/
+
+      def base64_encoded
         [self].pack 'm'
-      else
+      end
+    
+      def self.decode_base64 string
+        new string.unpack('m')[0]
+      end
+      
+    else
+
+      def base64_encoded
         Base64.encode64 self
       end
-    end
     
-    class << self
-      def decode_base64 string
-        if RUBY_VERSION =~ /^1\.9/
-          new string.unpack('m')[0]
-        else
-          new Base64.decode64 string
-        end
+      def self.decode_base64 string
+        new Base64.decode64 string
       end
+
     end
   end
 end
