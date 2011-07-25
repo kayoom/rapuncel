@@ -136,9 +136,9 @@ At the moment there are 2 options, to be set quite ugly as class attributes on R
 which will definitely change.
 
 1. **double\_as\_bigdecimal**
-Deserialize all <double> tags as BigDecimal.
+Deserialize all `<double>` tags as BigDecimal.
 2. **hash\_keys\_as\_string**
-Don't use Symbols as keys for deserialized <struct>, but Strings.
+Don't use Symbols as keys for deserialized `<struct>`, but Strings.
 
 ## Custom Serialization
 
