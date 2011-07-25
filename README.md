@@ -43,31 +43,32 @@ First you have to create a client with the connection details, e.g.
 Available options are:
 
 * **host**
-hostname or ip-address,
-_default_: localhost
+hostname or ip-address,  
+_default_: `localhost`
 * **port**
-port where your XMLRPC service is listening,
-_default_: 8080
+port where your XMLRPC service is listening,  
+_default_: `8080`
 * **path**
-path to the service,
-_default_: /
+path to the service,  
+_default_: `/`
 * **user**
-Username for HTTP Authentication
+Username for HTTP Authentication  
 _default_: _empty_
 * **password**
-Password for HTTP Authentication
+Password for HTTP Authentication  
 _default_: _empty_
 * **headers**
-Hash to set additional HTTP headers for the request, e.g. to send an X-ApiKey header for authentication
-_default_: {}
+Hash to set additional HTTP headers for the request, e.g. to send an X-ApiKey header for authentication  
+_default_: `{}`
 * **ssl**
-Flag wether to use SSL
-_default_: false
+Flag wether to use SSL  
+_default_: `false`
 * **raise_on**
-Lets you define the behavior on errors or faults, if set to _:fault_, _:error_ or _:both_,
+Lets you define the behavior on errors or faults, if set to `:fault`, `:error` or `:both`,  
 an Exception will be raised if something goes wrong
 * **serialization**
-Use your own (extended) (De)Serializers. See Custom Serialization
+Use your own (extended) (De)Serializers. See Custom Serialization  
+_default_: `Rapuncel::XmlRpc`
 
 ### Get a proxy object and ...
 A proxy object receives ruby method calls, redirects them to your XMLRPC service and returns the response as ruby objects!
@@ -91,8 +92,8 @@ Rapuncel supports natively following object-types (and all their subclasses):
 * Array
 * Hash
 * TrueClass, FalseClass
-* Float
-* BigDecimal (treated like Float)
+* Float / Double
+* BigDecimal (treated like Float, unless you set `double_as_bigdecimal` to true)
 * Time, Time-like objects
 * Base64
 
@@ -166,11 +167,21 @@ See Usage -> configuration -> raise\_on switch
 ### Malformed XML/XMLRPC
 Rapuncel will most likely fail hard.
 
+## Changelog
+
+* **0.0.5**
+  * Refactored serialization, preparation for pluggable extensions
+  * Deserialization option "double\_as\_bigdecimal"
+  * Deserialization option "hash\_keys\_as\_string"
+  * base64 support
+  * Object#to\_xmlrpc now should expect a XmlRpc::Serializer instance, 
+    not a Builder (you can access the Builder directly via XmlRpc::Serializer#builder)
+
 ## Open Source
 
 ### License
 
-Copyright (c) 2010 ['Marian Theisen', 'Michael Eickenberg']
+Copyright (c) 2011 ['Marian Theisen', 'Michael Eickenberg']
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
