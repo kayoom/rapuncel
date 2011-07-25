@@ -5,7 +5,7 @@ describe Array do
     before do
       @array = (1..10).to_a.map &:to_s
       
-      @xml = Rapuncel::XmlRpcSerializer[@array]
+      @xml = Rapuncel::XmlRpc::Serializer[@array]
     end
     
     it "yields a value tag for each array element" do
@@ -27,7 +27,7 @@ describe Array do
           <value><string>3</string></value>
         </data></array>
       XML
-      @array = Rapuncel::XmlRpcDeserializer[@xml]
+      @array = Rapuncel::XmlRpc::Deserializer[@xml]
     end
     
     it 'has correct number of elements' do

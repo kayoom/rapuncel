@@ -1,6 +1,9 @@
 require 'rapuncel/adapters/net_http_adapter'
 require 'rapuncel/connection'
+require 'rapuncel/xml_rpc/serializer'
+require 'rapuncel/xml_rpc/deserializer'
 require 'active_support/core_ext/hash/except'
+require 'active_support/inflector/methods'
 
 module Rapuncel
   class Client
@@ -17,8 +20,9 @@ module Rapuncel
     end
 
     def initialize configuration = {}
-      @connection = Connection.new configuration.except(:raise_on)
-
+      @connection = Connection.new configuration.except(:raise_on, :serialization)
+      @serialization = configuration[:serialization]
+      
       @raise_on_fault, @raise_on_error = case configuration[:raise_on]
       when :fault
         [true, false]
@@ -31,10 +35,12 @@ module Rapuncel
       end
     end
 
+    # Dispatch a method call and return the response as Rapuncel::Response object.
     def call name, *args
       execute Request.new(name, *args)
     end
 
+    # Dispatch a method call and return the response as parsed ruby.
     def call_to_ruby name, *args
       response = call name, *args
 
@@ -46,9 +52,28 @@ module Rapuncel
 
     protected
     def execute request
-      xml = XmlRpcSerializer.new(request).to_xml
+      xml = serializer[request]
 
-      Response.new send_method_call(xml)
+      Response.new send_method_call(xml), deserializer
+    end
+    
+    def serialization
+      case @serialization
+      when Module
+        @serialization
+      when String, Symbol
+        ActiveSupport::Inflector.constantize(@serialization.to_s)
+      else
+        XmlRpc
+      end
+    end
+    
+    def serializer
+      @serializer ||= serialization.const_get 'Serializer'
+    end
+    
+    def deserializer
+      @deserializer ||= serialization.const_get 'Deserializer'
     end
     
     private

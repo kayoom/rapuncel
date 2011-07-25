@@ -42,6 +42,7 @@ module Rapuncel
     def protocol
       ssl? ? 'https' : 'http'
     end
+    alias_method :scheme, :protocol
     
     def auth?
       !!user && !!password
@@ -57,7 +58,7 @@ module Rapuncel
       self.path     = configuration[:path]    || '/'
       self.headers  = configuration[:headers] || {}
       self.user     = configuration[:user]
-      self.password   = configuration[:password]
+      self.password = configuration[:password]
     end
   end
 end

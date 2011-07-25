@@ -27,7 +27,7 @@ describe Rapuncel::Response do
       </methodResponse>
     XML
     
-    response = Rapuncel::Response.new successful_response
+    response = Rapuncel::Response.new successful_response, Rapuncel::XmlRpc::Deserializer
     response.should be_success
     
     response.result.should == "foo foo foo"
@@ -66,7 +66,7 @@ describe Rapuncel::Response do
       </methodResponse>
     XML
     
-    response = Rapuncel::Response.new fault_response
+    response = Rapuncel::Response.new fault_response, Rapuncel::XmlRpc::Deserializer
     response.should be_fault
     
     response.to_ruby.should be_a Hash
@@ -76,7 +76,7 @@ describe Rapuncel::Response do
   it 'should handle errors' do
     error_response = HttpResponse.new "Not Found", false, 404
     
-    response = Rapuncel::Response.new error_response
+    response = Rapuncel::Response.new error_response, Rapuncel::XmlRpc::Deserializer
     response.should be_error
     
     response.to_ruby.should be_a Hash

@@ -1,5 +1,4 @@
 require 'active_support/core_ext/module/delegation'
-require 'rapuncel/xml_rpc_deserializer'
 
 module Rapuncel
   class Response
@@ -7,14 +6,14 @@ module Rapuncel
     class Fault < Exception ; end
     class Error < Exception ; end
 
-    attr_accessor :http_response, :status, :status_code, :response
+    attr_accessor :http_response, :status, :status_code, :response, :deserializer
 
     delegate  :body,
               :to => :http_response
 
-    def initialize http_response
-      @http_response = http_response
-
+    def initialize http_response, deserializer
+      @http_response, @deserializer = http_response, deserializer
+      
       evaluate_status
     end
 
@@ -64,7 +63,7 @@ module Rapuncel
 
     protected
     def deserialize_response
-      @response = XmlRpcDeserializer.new(body).to_ruby
+      @response = deserializer[body]
     end
   end
 end

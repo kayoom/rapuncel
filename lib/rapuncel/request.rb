@@ -1,5 +1,3 @@
-require 'rapuncel/xml_rpc_serializer'
-
 module Rapuncel
   class Request
     attr_accessor :method_name, :arguments

@@ -3,13 +3,13 @@ require 'rapuncel/request'
 module Rapuncel
   class Proxy
     PROXY_METHODS  = %w(tap inspect clone freeze dup class initialize to_s).freeze
-    LOCKED_METHODS = %w(method_missing).freeze
+    LOCKED_METHODS = %w(method_missing object_id).freeze
     LOCKED_PATTERN = /(\A__|\?\Z|!\Z)/.freeze
 
     class << self
       # Initialize a new Proxy object for a specific Client. Alternatively
       # you can pass a Hash containing configuration for a new Client, which
-      # will be created on-the-fly, but not accessible. The second parameter
+      # will be created on-the-fly, but is directly not accessible. The second parameter
       # specifies a specific interface/namespace for the remote calls,
       # i.e. if your RPC method is
       #
@@ -35,6 +35,13 @@ module Rapuncel
           end
         RUBY
       end
+      
+      # Predefine some proxy methods.
+      def define_proxy_methods *names
+        names.each do |name|
+          define_proxy_method name
+        end
+      end
     end
 
     PROXY_METHODS.each do |name|
@@ -44,7 +51,7 @@ module Rapuncel
     alias_method "__inspect__", "__to_s__"
 
     instance_methods.each do |name|
-      unless LOCKED_METHODS.include?(name) || LOCKED_PATTERN.match(name)
+      unless LOCKED_METHODS.include?(name.to_s) || LOCKED_PATTERN.match(name.to_s)
         define_proxy_method name
       end
     end

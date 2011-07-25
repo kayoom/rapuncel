@@ -5,7 +5,7 @@ describe Rapuncel::Request do
   describe "Serialization" do
     before do
       @request = Rapuncel::Request.new 'test_method', "one argument", "another"
-      @xml = Rapuncel::XmlRpcSerializer[@request]
+      @xml = Rapuncel::XmlRpc::Serializer[@request]
     end
   
     it 'should be in xml version=1.0' do

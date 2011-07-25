@@ -6,10 +6,8 @@ It's based on Nokogiri for XML parsing and thus provides a major performance imp
 ## I need your help
 I currently have exactly 1 application for Rapuncel, and that's [Kangaroo](https://github.com/cice/kangARoo), i.e.
 the OpenERP XMLRPC service, where it works absolutely fine. To improve Rapuncel i need your experience with
-other services and their quirks.
+other services and their quirks. Just open a feature request or file a bug report.
   
-This Readme is for the upcoming 0.1 release, 0.0.x Readme [here](https://github.com/cice/rapuncel/blob/be19d4427dba14dbc656de1d90501f9d42aa4ef8/README.md) 
-
 ## Installation
 
 ### Rails
@@ -68,6 +66,8 @@ _default_: false
 * **raise_on**
 Lets you define the behavior on errors or faults, if set to _:fault_, _:error_ or _:both_,
 an Exception will be raised if something goes wrong
+* **serialization**
+Use your own (extended) (De)Serializers. See Custom Serialization
 
 ### Get a proxy object and ...
 A proxy object receives ruby method calls, redirects them to your XMLRPC service and returns the response as ruby objects!
@@ -112,7 +112,7 @@ Base64 return values from normal String return values.
 ## Supported methods
 You can use most methods via
 
-    proxy.methodname *args
+    proxy.methodname 'a', 1, [:a, :b], :a => :d
 
 However methods starting with \_\_, or ending with a bang \! or a question mark ? are not supported. To call those methods you can always
 use
@@ -127,11 +127,11 @@ note
 
     client.call 'methodname', *args
 
-will return a Rapuncel::Response object, use _call\_to\_ruby_ to get standard ruby objects
+will return a Rapuncel::Response object, use _call\_to\_ruby_ to get a parsed result
 
 ## Deserialization options
 
-At the moment there are 2 options, to be set quite ugly as class attributes on Rapuncel::XmlRpcDeserializer,
+At the moment there are 2 options, to be set quite ugly as class attributes on Rapuncel::XmlRpc::Deserializer,
 which will definitely change.
 
 1. **double\_as\_bigdecimal**
@@ -139,6 +139,17 @@ Deserialize all <double> tags as BigDecimal.
 2. **hash\_keys\_as\_string**
 Don't use Symbols as keys for deserialized <struct>, but Strings.
 
+## Custom Serialization
+
+    module MySpecialSerialization
+      class Serializer < Rapuncel::XmlRpc::Serializer
+      end
+      class Deserializer < Rapuncel::XmlRpc::Deserializer
+      end
+    end
+    
+    client = Rapuncel::Client.new :serialization => MySpecialSerialization
+    # or :serialization => 'MySpecialSerialization'
 
 ## Todo ?
 
