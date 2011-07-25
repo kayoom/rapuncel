@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "rapuncel"
-  s.version     = "0.0.5.RC1"
+  s.version     = "0.0.5.RC2"
   s.date        = Time.now.strftime("%Y-%m-%d")
   s.authors     = ["Michael Eickenberg", "Marian Theisen"]
   s.email       = 'marian@cice-online.net'
