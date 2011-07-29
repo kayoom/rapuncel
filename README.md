@@ -4,7 +4,7 @@ Rapuncel ([wikipedia](http://en.wikipedia.org/wiki/Rapunzel)) is a simple and li
 It's based on Nokogiri for XML parsing and thus provides a major performance improvement for large XML responses.
 
 ## I need your help
-I currently have exactly 1 application for Rapuncel, and that's [Kangaroo](https://github.com/cice/kangARoo), i.e.
+I currently have exactly 1 application for Rapuncel, and that's [Kangaroo](https://github.com/kayoom/kangaroo), i.e.
 the OpenERP XMLRPC service, where it works absolutely fine. To improve Rapuncel i need your experience with
 other services and their quirks. Just open a feature request or file a bug report.
   
