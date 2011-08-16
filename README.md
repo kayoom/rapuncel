@@ -6,7 +6,7 @@ It's based on Nokogiri for XML parsing and thus provides a major performance imp
 ## I need your help
 I currently have exactly 1 application for Rapuncel, and that's [Kangaroo](https://github.com/kayoom/kangaroo), i.e.
 the OpenERP XMLRPC service, where it works absolutely fine. To improve Rapuncel i need your experience with
-other services and their quirks. Just open a feature request or file a bug report.
+other services and their quirks. Just open a feature request, file a bug report, send me a message.
   
 ## Installation
 
@@ -181,7 +181,7 @@ Rapuncel will most likely fail hard.
 
 ### License
 
-Copyright (c) 2011 ['Marian Theisen', 'Michael Eickenberg']
+Copyright (c) 2011 Kayoom GmbH
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
