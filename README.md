@@ -1,4 +1,5 @@
 # Rapuncel - Simple XML-RPC Client
+[![Build Status](https://secure.travis-ci.org/cice/rapuncel.png)](http://travis-ci.org/cice/rapuncel)
 
 Rapuncel ([wikipedia](http://en.wikipedia.org/wiki/Rapunzel)) is a simple and lightweight, but fast XML-RPC client library for ruby.
 It's based on Nokogiri for XML parsing and thus provides a major performance improvement for large XML responses.
