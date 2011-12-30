@@ -159,6 +159,7 @@ Don't use Symbols as keys for deserialized `<struct>`, but Strings.
 * HTTP-Proxy support
 * Async requests
 * XMLRPC Extensions (pluggable support)
+  * Apache vendor extensions
 * How do i test SSL?
 
 ## What happens if something goes wrong?
