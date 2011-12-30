@@ -11,8 +11,16 @@ module Rapuncel
 
     include Adapters::NetHttpAdapter
 
-    def proxy_for interface
-      Proxy.new self, interface
+    def proxy_for interface = nil
+      if interface.nil?
+        @default_proxy ||= Proxy.new self, nil
+      else
+        @proxies ||= Hash.new do |hash, key|
+          hash[key] = Proxy.new self, key
+        end
+        
+        @proxies[interface.to_s]
+      end
     end
 
     def proxy
