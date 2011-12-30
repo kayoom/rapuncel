@@ -4,9 +4,12 @@ require 'rapuncel/xml_rpc/serializer'
 require 'rapuncel/xml_rpc/deserializer'
 require 'active_support/core_ext/hash/except'
 require 'active_support/inflector/methods'
+require 'active_support/deprecation'
 
 module Rapuncel
   class Client
+    autoload :Logging, 'rapuncel/client/logging'
+    
     attr_accessor :connection, :raise_on_fault, :raise_on_error
 
     include Adapters::NetHttpAdapter
@@ -41,16 +44,22 @@ module Rapuncel
       else
         [false, false]
       end
+      
+      if logger = configuration[:logger]
+        extend Logging
+        initialize_logging logger, configuration[:log_level]
+      end
     end
 
     # Dispatch a method call and return the response as Rapuncel::Response object.
     def call name, *args
-      execute Request.new(name, *args)
+      ActiveSupport::Deprecation.warn "Using #call is deprecated, please use #call_to_ruby instead.", caller
+      _call name, *args
     end
 
     # Dispatch a method call and return the response as parsed ruby.
     def call_to_ruby name, *args
-      response = call name, *args
+      response = _call name, *args
 
       raise_on_fault && response.fault? && raise_fault(response)
       raise_on_error && response.error? && raise_error(response)
@@ -59,6 +68,10 @@ module Rapuncel
     end
 
     protected
+    def _call name, *args
+      execute Request.new(name, *args)
+    end
+    
     def execute request
       xml = serializer[request]
 
