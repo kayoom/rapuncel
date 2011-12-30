@@ -32,8 +32,8 @@ module Rapuncel
         self.log_level = log_level
       end
       
-      logger.info { with_log_prefix "Initialized." }
-      logger.debug { with_log_prefix "Using (De)Serializer: #{serialization.to_s}" }
+      @logger.info { with_log_prefix "Initialized." }
+      @logger.debug { with_log_prefix "Using (De)Serializer: #{serialization.to_s}" }
     end
     
     def _call name, *args
