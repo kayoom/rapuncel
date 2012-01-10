@@ -58,10 +58,10 @@ module Rapuncel
         when response.success?
           logger.debug { "Received XML-Response: \n #{response.body}" }
         when response.fault?
-          level = raise_on_fault ? :error : :warn
+          level = raise_on_fault ? Logger::ERROR : Logger::WARN
           logger.add(level) { "Received XML-Fault: \n #{response.body}" }
         when response.error?
-          level = raise_on_error ? :error : :warn
+          level = raise_on_error ? Logger::ERROR : Logger::WARN
           logger.add(level) { "HTTP Error: #{response.status}\n #{response.body}" }
         end
       end

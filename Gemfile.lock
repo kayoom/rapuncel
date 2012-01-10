@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rapuncel (0.0.6.RC2)
+    rapuncel (0.0.6.RC3)
       activesupport (>= 3.0.0)
       nokogiri
 
