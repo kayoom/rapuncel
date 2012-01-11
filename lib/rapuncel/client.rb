@@ -1,4 +1,4 @@
-require 'rapuncel/adapters/net_http_adapter'
+require 'rapuncel/adapters/curb_adapter'
 require 'rapuncel/connection'
 require 'rapuncel/xml_rpc/serializer'
 require 'rapuncel/xml_rpc/deserializer'
@@ -12,23 +12,7 @@ module Rapuncel
     
     attr_accessor :connection, :raise_on_fault, :raise_on_error
 
-    include Adapters::NetHttpAdapter
-
-    def proxy_for interface = nil
-      if interface.nil?
-        @default_proxy ||= Proxy.new self, nil
-      else
-        @proxies ||= Hash.new do |hash, key|
-          hash[key] = Proxy.new self, key
-        end
-        
-        @proxies[interface.to_s]
-      end
-    end
-
-    def proxy
-      proxy_for nil
-    end
+    include Adapters::CurbAdapter
 
     def initialize configuration = {}
       @connection = Connection.new configuration.except(:raise_on, :serialization)
@@ -49,6 +33,22 @@ module Rapuncel
         extend Logging
         initialize_logging logger, configuration[:log_level]
       end
+    end
+
+    def proxy_for interface = nil
+      if interface.nil?
+        @default_proxy ||= Proxy.new self, nil
+      else
+        @proxies ||= Hash.new do |hash, key|
+          hash[key] = Proxy.new self, key
+        end
+        
+        @proxies[interface.to_s]
+      end
+    end
+
+    def proxy
+      proxy_for nil
     end
 
     # Dispatch a method call and return the response as Rapuncel::Response object.
