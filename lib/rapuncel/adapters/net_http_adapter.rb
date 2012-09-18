@@ -28,6 +28,7 @@ module Rapuncel
         request = Net::HTTP.new connection.host, connection.port
         request.use_ssl = connection.ssl?
         request.basic_auth connection.user, connection.password if connection.auth?
+        request.read_timeout = 300 # 5 minute timeout
 
         HttpResponse.new request.post(connection.path, str, connection.headers)
       end
