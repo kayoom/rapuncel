@@ -16,7 +16,7 @@ RSpec.configure do |config|
     @server = TestServer.new
     @server.start
   end
-  
+
   config.after :all do
     @server.stop
   end

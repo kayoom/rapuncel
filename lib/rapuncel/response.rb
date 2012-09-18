@@ -13,7 +13,7 @@ module Rapuncel
 
     def initialize http_response, deserializer
       @http_response, @deserializer = http_response, deserializer
-      
+
       evaluate_status
     end
 
@@ -24,7 +24,7 @@ module Rapuncel
         'error'
       else
         deserialize_response
-        
+
         if Hash === response && response[:faultCode]
           'fault'
         else

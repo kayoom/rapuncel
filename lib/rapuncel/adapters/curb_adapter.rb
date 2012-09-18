@@ -24,7 +24,7 @@ module Rapuncel
 
       # Dispatch a XMLRPC via HTTP and return a response object.
       def send_method_call str
-        @curb ||= Curb::Easy.new "#{connection.host}:#{connection.port}"
+        @curb ||= Curl::Easy.new "#{connection.host}:#{connection.port}#{connection.path}"
 
         @curb.post_body = str
         @curb.headers = @curb.headers.merge connection.headers

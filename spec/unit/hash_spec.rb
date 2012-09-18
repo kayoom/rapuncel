@@ -9,21 +9,21 @@ describe Hash do
         40 => %w(foo bar bee),
         BigDecimal.new('1.23') => "abcd"
       }
-      
+
       @xml = Rapuncel::XmlRpc::Serializer[@hash]
     end
-    
+
     it 'preserves number of key-value pairs' do
       @xml.should have_xpath('/struct/member', :count => 3)
     end
-    
+
     it 'projects all keys to plain strings' do
       @xml.should have_xpath('/struct/member/name', :content => 'abc')
       @xml.should have_xpath('/struct/member/name', :content => '40')
       @xml.should have_xpath('/struct/member/name', :content => '1.23')
     end
   end
-  
+
   describe "Deserialization" do
     before do
       @xml = <<-XML
@@ -34,18 +34,18 @@ describe Hash do
         <value><string>xyz</string></value></member>
         </struct>
       XML
-      
+
       @hash = Rapuncel::XmlRpc::Deserializer[@xml]
     end
-    
+
     it 'preserves number of key-value pairs' do
       @hash.length.should == 2
     end
-    
+
     it 'converts all keys to symbols' do
       @hash.keys.should be_all{|key| Symbol === key}
     end
-    
+
     it 'casts values to their types' do
       @hash[:abcd].should == 123
       @hash[:'456'].should == 'xyz'

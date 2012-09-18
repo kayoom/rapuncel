@@ -13,7 +13,7 @@ end
 
 class TestServer
   attr_accessor :server
-  
+
   def initialize
     @server = XMLRPC::Server.new(9485, '127.0.0.1', 4, File.open('/dev/null','w')).tap do |s|
       s.add_handler(Num::INTERFACE, Num.new)

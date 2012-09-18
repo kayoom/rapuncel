@@ -9,20 +9,20 @@ describe "Base64" do
       Base64.encode64(string)
     end
   end
-  
+
   it 'should encode Base64 marked strings as Base64' do
     string = "abcdefghABCDEFGH1234567890".as_base64
     string.should be_a Rapuncel::Base64String
-    
+
     xml = Rapuncel::XmlRpc::Serializer[string]
     xml.should have_xpath('/base64', :content => to_base64(string))
   end
-  
+
   it 'should decode base64 as Base64Strings' do
     xml = <<-XML
       <base64>YWJjZGVmZ2hBQkNERUZHSDEyMzQ1Njc4OTA=</base64>
     XML
-    
+
     string = Rapuncel::XmlRpc::Deserializer[xml]
     string.should be_a Rapuncel::Base64String
     string.should == "abcdefghABCDEFGH1234567890"

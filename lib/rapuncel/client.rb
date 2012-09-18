@@ -9,7 +9,7 @@ require 'active_support/deprecation'
 module Rapuncel
   class Client
     autoload :Logging, 'rapuncel/client/logging'
-    
+
     attr_accessor :connection, :raise_on_fault, :raise_on_error
 
     include Adapters::CurbAdapter
@@ -17,7 +17,7 @@ module Rapuncel
     def initialize configuration = {}
       @connection = Connection.new configuration.except(:raise_on, :serialization)
       @serialization = configuration[:serialization]
-      
+
       @raise_on_fault, @raise_on_error = case configuration[:raise_on]
       when :fault
         [true, false]
@@ -28,7 +28,7 @@ module Rapuncel
       else
         [false, false]
       end
-      
+
       if logger = configuration[:logger]
         extend Logging
         initialize_logging logger, configuration[:log_level]
@@ -42,7 +42,7 @@ module Rapuncel
         @proxies ||= Hash.new do |hash, key|
           hash[key] = Proxy.new self, key
         end
-        
+
         @proxies[interface.to_s]
       end
     end
@@ -71,13 +71,13 @@ module Rapuncel
     def _call name, *args
       execute Request.new(name, *args)
     end
-    
+
     def execute request
       xml = serializer[request]
 
       Response.new send_method_call(xml), deserializer
     end
-    
+
     def serialization
       case @serialization
       when Module
@@ -88,20 +88,20 @@ module Rapuncel
         XmlRpc
       end
     end
-    
+
     def serializer
       @serializer ||= serialization.const_get 'Serializer'
     end
-    
+
     def deserializer
       @deserializer ||= serialization.const_get 'Deserializer'
     end
-    
+
     private
     def raise_fault response
       raise(Response::Fault, response.fault[:faultCode], response.fault[:faultString].split("\n"))
     end
-    
+
     def raise_error response
       raise(Response::Error, "HTTP Error: #{response.error.inspect}")
     end

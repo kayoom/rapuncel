@@ -16,17 +16,17 @@ module Rapuncel
       def base64_encoded
         [self].pack 'm'
       end
-    
+
       def self.decode_base64 string
         new string.unpack('m')[0]
       end
-      
+
     else
 
       def base64_encoded
         Base64.encode64 self
       end
-    
+
       def self.decode_base64 string
         new Base64.decode64 string
       end

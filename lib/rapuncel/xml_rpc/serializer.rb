@@ -5,15 +5,15 @@ module Rapuncel
   module XmlRpc
     class Serializer
       XML_ENCODING = 'UTF-8'
-    
+
       attr_reader :builder
-    
+
       def initialize object
         @builder = Nokogiri::XML::Builder.new :encoding => XML_ENCODING
-      
+
         serialize object
       end
-    
+
       def serialize object
         case object
         when Base64String
@@ -49,14 +49,14 @@ module Rapuncel
             serialize_hash instance_variable_hash(object)
           end
         end
-      
+
         self
       end
-    
+
       def serialize_base64 string
         builder.base64 string.base64_encoded
       end
-    
+
       def serialize_array array
         builder.array do |builder|
           builder.data do |builder|
@@ -68,28 +68,28 @@ module Rapuncel
           end
         end
       end
-    
+
       def serialize_string string
         builder.string string
       end
-    
+
       def serialize_true
         builder.boolean "1"
       end
-    
+
       def serialize_false
         builder.boolean "0"
       end
       alias_method :serialize_nil, :serialize_false
-    
+
       def serialize_float float
         builder.double float.to_s
       end
-    
+
       def serialize_big_decimal big_decimal
         builder.double big_decimal.to_s("F")
       end
-    
+
       def serialize_hash hash
         builder.struct do |builder|
           hash.each_pair do |key, value|
@@ -105,15 +105,15 @@ module Rapuncel
           end
         end
       end
-    
+
       def serialize_integer int
         builder.int int.to_s
       end
-    
+
       def serialize_time time
         builder.send "dateTime.iso8601", time.iso8601
       end
-    
+
       def serialize_request request
         builder.methodCall do |builder|
           builder.methodName request.method_name
@@ -128,11 +128,11 @@ module Rapuncel
           end
         end
       end
-    
+
       def to_xml
         @builder.to_xml
       end
-    
+
       protected
       def instance_variable_hash object
         {}.tap do |hash|
@@ -141,7 +141,7 @@ module Rapuncel
           end
         end
       end
-    
+
       class << self
         def serialize object
           new(object).to_xml

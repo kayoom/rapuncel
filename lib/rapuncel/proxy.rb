@@ -35,7 +35,7 @@ module Rapuncel
           end
         RUBY
       end
-      
+
       # Predefine some proxy methods.
       def define_proxy_methods *names
         names.each do |name|
@@ -47,7 +47,7 @@ module Rapuncel
     PROXY_METHODS.each do |name|
       alias_method "__#{name}__", name
     end
-    
+
     alias_method "__inspect__", "__to_s__"
 
     instance_methods.each do |name|

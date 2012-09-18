@@ -12,7 +12,7 @@ describe Rapuncel::Response do
       @success
     end
   end
-  
+
   it 'parses successful response' do
     successful_response = HttpResponse.new <<-XML
       <?xml version='1.0'?>
@@ -26,13 +26,13 @@ describe Rapuncel::Response do
         </params>
       </methodResponse>
     XML
-    
+
     response = Rapuncel::Response.new successful_response, Rapuncel::XmlRpc::Deserializer
     response.should be_success
-    
+
     response.result.should == "foo foo foo"
   end
-  
+
   it 'parses fault response' do
     fault_response = HttpResponse.new <<-XML
       <?xml version='1.0'?>
@@ -65,20 +65,20 @@ describe Rapuncel::Response do
         </fault>
       </methodResponse>
     XML
-    
+
     response = Rapuncel::Response.new fault_response, Rapuncel::XmlRpc::Deserializer
     response.should be_fault
-    
+
     response.to_ruby.should be_a Hash
     response.to_ruby[:faultCode].should == 42
   end
-  
+
   it 'should handle errors' do
     error_response = HttpResponse.new "Not Found", false, 404
-    
+
     response = Rapuncel::Response.new error_response, Rapuncel::XmlRpc::Deserializer
     response.should be_error
-    
+
     response.to_ruby.should be_a Hash
     response.to_ruby[:http_code].should == 404
   end
